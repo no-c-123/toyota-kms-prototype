@@ -1,0 +1,12 @@
+==============================================================================
+TOYOTA KMS - SEMANTIC SEARCH (TF-IDF + cosine similarity)
+==============================================================================
+Indexed documents: 48 | Vocabulary size: 1722 terms
+
+QUERY: "andon cord training for new operators"
+  Terms recognized: andon, cord, training, new, operators
+  1. [0.410] HR-002 | HR & Training | Andon cord training module
+  2. [0.198] MFG-005 | Manufacturing | Andon response procedure on the assembly line
+  3. [0.124] HR-001 | HR & Training | New operator onboarding program
+  4. [0.064] HR-006 | HR & Training | Job instruction training method
+  5. [0.062] RD-004 | R&D           | Crash simulation of new chassis

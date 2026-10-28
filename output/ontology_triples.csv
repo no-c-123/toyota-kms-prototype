@@ -1,0 +1,143 @@
+subject,predicate,object
+Toyota,applies,Toyota Production System
+Toyota,organizes knowledge into,Category
+Jidoka,part of,Toyota Production System
+Just-in-time,part of,Toyota Production System
+Kaizen,part of,Toyota Production System
+Respect for people,part of,Toyota Production System
+Andon,implements,Jidoka
+Poka-yoke,implements,Jidoka
+Kanban,implements,Just-in-time
+Takt time,implements,Just-in-time
+Standardized work,basis of,Kaizen
+Root cause analysis,supports,Kaizen
+Tacit knowledge,captured by,Respect for people
+Andon,related to,Manufacturing
+Poka-yoke,related to,Quality
+Root cause analysis,related to,Quality
+Kanban,related to,Supply Chain
+Supplier,related to,Supply Chain
+Hybrid battery,related to,R&D
+Hybrid battery,related to,Safety
+Tacit knowledge,related to,HR & Training
+MFG-001,classified as,Manufacturing
+MFG-001,is a,Standardized work sheet
+MFG-001,describes,Standardized work
+MFG-001,describes,Takt time
+MFG-002,classified as,Manufacturing
+MFG-002,is a,Plan
+MFG-002,describes,Just-in-time
+MFG-003,classified as,Manufacturing
+MFG-003,is a,Technical report
+MFG-003,describes,Standardized work
+MFG-004,classified as,Manufacturing
+MFG-004,is a,Technical report
+MFG-004,describes,Kaizen
+MFG-005,classified as,Manufacturing
+MFG-005,is a,Procedure
+MFG-005,describes,Andon
+MFG-005,describes,Jidoka
+MFG-006,classified as,Manufacturing
+MFG-006,is a,Standardized work sheet
+MFG-007,classified as,Manufacturing
+MFG-007,is a,Plan
+MFG-008,classified as,Manufacturing
+MFG-008,is a,Technical report
+MFG-008,describes,Takt time
+QA-001,classified as,Quality
+QA-001,is a,Quality report
+QA-001,describes,Root cause analysis
+QA-002,classified as,Quality
+QA-002,is a,Quality report
+QA-003,classified as,Quality
+QA-003,is a,Quality report
+QA-004,classified as,Quality
+QA-004,is a,Quality report
+QA-004,describes,Root cause analysis
+QA-004,describes,Supplier
+QA-005,classified as,Quality
+QA-005,is a,Quality report
+QA-006,classified as,Quality
+QA-006,is a,Quality report
+QA-007,classified as,Quality
+QA-007,is a,Quality report
+QA-008,classified as,Quality
+QA-008,is a,Quality report
+QA-008,describes,Poka-yoke
+SAF-001,classified as,Safety
+SAF-001,is a,Policy
+SAF-002,classified as,Safety
+SAF-002,is a,Procedure
+SAF-003,classified as,Safety
+SAF-003,is a,Technical report
+SAF-004,classified as,Safety
+SAF-004,is a,Technical report
+SAF-005,classified as,Safety
+SAF-005,is a,Procedure
+SAF-006,classified as,Safety
+SAF-006,is a,Plan
+SAF-007,classified as,Safety
+SAF-007,is a,Technical report
+SAF-008,classified as,Safety
+SAF-008,is a,Technical report
+SAF-008,describes,Hybrid battery
+RD-001,classified as,R&D
+RD-001,is a,Technical report
+RD-002,classified as,R&D
+RD-002,is a,Technical report
+RD-003,classified as,R&D
+RD-003,is a,Technical report
+RD-003,describes,Hybrid battery
+RD-004,classified as,R&D
+RD-004,is a,Technical report
+RD-005,classified as,R&D
+RD-005,is a,Technical report
+RD-006,classified as,R&D
+RD-006,is a,Technical report
+RD-007,classified as,R&D
+RD-007,is a,Technical report
+RD-008,classified as,R&D
+RD-008,is a,Technical report
+SC-001,classified as,Supply Chain
+SC-001,is a,Procedure
+SC-001,describes,Kanban
+SC-001,describes,Supplier
+SC-001,describes,Just-in-time
+SC-002,classified as,Supply Chain
+SC-002,is a,Technical report
+SC-002,describes,Supplier
+SC-003,classified as,Supply Chain
+SC-003,is a,Plan
+SC-003,describes,Supplier
+SC-004,classified as,Supply Chain
+SC-004,is a,Policy
+SC-004,describes,Supplier
+SC-005,classified as,Supply Chain
+SC-005,is a,Plan
+SC-005,describes,Supplier
+SC-006,classified as,Supply Chain
+SC-006,is a,Plan
+SC-007,classified as,Supply Chain
+SC-007,is a,Procedure
+SC-008,classified as,Supply Chain
+SC-008,is a,Plan
+SC-008,describes,Supplier
+HR-001,classified as,HR & Training
+HR-001,is a,Training module
+HR-002,classified as,HR & Training
+HR-002,is a,Training module
+HR-002,describes,Andon
+HR-003,classified as,HR & Training
+HR-003,is a,Training module
+HR-004,classified as,HR & Training
+HR-004,is a,Technical report
+HR-005,classified as,HR & Training
+HR-005,is a,Policy
+HR-006,classified as,HR & Training
+HR-006,is a,Training module
+HR-007,classified as,HR & Training
+HR-007,is a,Technical report
+HR-007,describes,Tacit knowledge
+HR-008,classified as,HR & Training
+HR-008,is a,Policy
+HR-008,describes,Kaizen

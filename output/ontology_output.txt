@@ -1,0 +1,37 @@
+======================================================================
+TOYOTA KMS - ONTOLOGY / CONCEPTUAL GRAPH
+======================================================================
+Classes: 5 | Instances: 28 concepts + 48 documents
+Triples: 142
+  classified as              48
+  is a                       48
+  describes                  25
+  related to                 8
+  part of                    4
+  implements                 4
+  applies                    1
+  organizes knowledge into   1
+  basis of                   1
+  supports                   1
+  captured by                1
+
+Documents linked to each concept (derived from text):
+  Supplier              7  QA-004, SC-001, SC-002, SC-003, SC-004, SC-005 ...
+  Standardized work     2  MFG-001, MFG-003
+  Takt time             2  MFG-001, MFG-008
+  Just-in-time          2  MFG-002, SC-001
+  Kaizen                2  MFG-004, HR-008
+  Andon                 2  MFG-005, HR-002
+  Root cause analysis   2  QA-001, QA-004
+  Hybrid battery        2  SAF-008, RD-003
+  Jidoka                1  MFG-005
+  Poka-yoke             1  QA-008
+  Kanban                1  SC-001
+  Tacit knowledge       1  HR-007
+
+Example query: which documents describe Andon, and what principle does it implement?
+  Andon -> implements -> Jidoka -> part of -> Toyota Production System
+  MFG-005: Andon response procedure on the assembly line
+  HR-002: Andon cord training module
+
+Graph image written to output/ontology_graph.png

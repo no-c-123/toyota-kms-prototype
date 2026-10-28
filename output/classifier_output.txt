@@ -1,0 +1,82 @@
+======================================================================
+TOYOTA KMS - AUTOMATED DOCUMENT CLASSIFIER
+======================================================================
+Documents loaded: 48
+  Manufacturing   8 documents
+  Quality         8 documents
+  Safety          8 documents
+  R&D             8 documents
+  Supply Chain    8 documents
+  HR & Training   8 documents
+
+Train set: 36 docs | Test set: 12 docs
+
+----------------------------------------------------------------------
+MODEL: Naive Bayes
+----------------------------------------------------------------------
+Hold-out accuracy:        58.33%
+4-fold cross-validation:  70.83% (+/- 13.82%)
+               precision    recall  f1-score   support
+
+HR & Training       0.33      0.50      0.40         2
+Manufacturing       0.00      0.00      0.00         2
+      Quality       1.00      0.50      0.67         2
+          R&D       1.00      1.00      1.00         2
+       Safety       0.50      0.50      0.50         2
+ Supply Chain       0.67      1.00      0.80         2
+
+     accuracy                           0.58        12
+    macro avg       0.58      0.58      0.56        12
+ weighted avg       0.58      0.58      0.56        12
+
+
+----------------------------------------------------------------------
+MODEL: Logistic Regression
+----------------------------------------------------------------------
+Hold-out accuracy:        75.00%
+4-fold cross-validation:  70.83% (+/- 9.32%)
+               precision    recall  f1-score   support
+
+HR & Training       0.33      0.50      0.40         2
+Manufacturing       0.67      1.00      0.80         2
+      Quality       1.00      0.50      0.67         2
+          R&D       1.00      1.00      1.00         2
+       Safety       1.00      0.50      0.67         2
+ Supply Chain       1.00      1.00      1.00         2
+
+     accuracy                           0.75        12
+    macro avg       0.83      0.75      0.76        12
+ weighted avg       0.83      0.75      0.76        12
+
+======================================================================
+Best model by cross-validation: Logistic Regression
+
+Top terms learned per category:
+  HR & Training   training, employees, employee, skills, job, development
+  Manufacturing   line, production, assembly, time, welding, assembly line
+  Quality         quality, inspection, nonconformity, investigation, analysis, defects
+  R&D             engineers, design, test, prototype, research, measured
+  Safety          safety, evacuation, handling, injuries, zero, evacuation plan
+  Supply Chain    parts, suppliers, supplier, delivery, logistics, purchasing
+
+======================================================================
+CLASSIFYING NEW (UNSEEN) DOCUMENTS
+======================================================================
+
+> Root cause analysis of scratches found on bumpers during final inspection; corrective acti...
+  Predicted category: Quality  (confidence 59%; 2nd: Supply Chain 10%)
+
+> Procedure to evacuate the paint shop in case of fire and use of fire extinguishers by floo...
+  Predicted category: Safety  (confidence 31%; 2nd: Manufacturing 19%)
+
+> Engineers tested a new electric motor cooling design on the dynamometer to improve efficie...
+  Predicted category: R&D  (confidence 66%; 2nd: HR & Training 7%)
+
+> The supplier will deliver wire harnesses twice per day following the kanban signal to redu...
+  Predicted category: Supply Chain  (confidence 37%; 2nd: Safety 16%)
+
+> Training course for new hires on standardized work, Toyota Way values and coaching by the ...
+  Predicted category: HR & Training  (confidence 42%; 2nd: Manufacturing 18%)
+
+> Reduce takt time losses on the engine assembly line by rebalancing work between stations....
+  Predicted category: Manufacturing  (confidence 57%; 2nd: Safety 10%)

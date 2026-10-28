@@ -1,0 +1,32 @@
+==============================================================================
+TOYOTA KMS - SEMANTIC SEARCH (TF-IDF + cosine similarity)
+==============================================================================
+Indexed documents: 48 | Vocabulary size: 1722 terms
+
+QUERY: "what to do when an operator finds a problem and needs to stop the line"
+  Terms recognized: operator, problem, stop, line
+  1. [0.162] MFG-005 | Manufacturing | Andon response procedure on the assembly line
+  2. [0.108] MFG-008 | Manufacturing | Final assembly line balancing study
+  3. [0.091] HR-003 | HR & Training | Team leader development curriculum
+
+QUERY: "how are suppliers told to deliver more parts"
+  Terms recognized: suppliers, parts
+  1. [0.175] SC-007 | Supply Chain  | Customs import procedure for parts
+  2. [0.150] SC-003 | Supply Chain  | Milk run logistics route plan
+  3. [0.137] SC-006 | Supply Chain  | Inbound parts warehouse layout
+
+QUERY: "protection against electric shock with hybrid batteries"
+  Terms recognized: protection, electric, shock, hybrid
+  1. [0.224] SAF-008 | Safety        | Hazard identification for battery handling
+  2. [0.134] RD-001 | R&D           | Hybrid powertrain efficiency test
+  3. [0.067] RD-004 | R&D           | Crash simulation of new chassis
+
+QUERY: "keep the knowledge of senior technicians before they retire"
+  Terms recognized: knowledge, senior, technicians
+  1. [0.361] HR-007 | HR & Training | Knowledge transfer from retiring experts
+
+QUERY: "why do customers report brake noise"
+  Terms recognized: report, brake, noise
+  1. [0.203] QA-003 | Quality       | Customer warranty claims analysis Q3
+  2. [0.115] RD-002 | R&D           | Brake system test specification
+  3. [0.081] QA-004 | Quality       | Supplier part nonconformity report
