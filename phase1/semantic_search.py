@@ -20,7 +20,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-DATA_FILE = Path(__file__).parent / "data" / "toyota_documents.json"
+DATA_FILE = Path(__file__).parent / "toyota_documents_v1.json"
 
 
 class ToyotaSearchEngine:

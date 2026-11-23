@@ -1,0 +1,192 @@
+{
+  "protocol": "4-fold StratifiedGroupKFold x 5 repeats; groups = document id (both language versions of a document stay in the same fold)",
+  "n_documents": 72,
+  "n_samples": 144,
+  "models": {
+    "Phase 1 baseline (English words, no stemming) + Logistic Regression": {
+      "accuracy_mean": 0.7763888888888889,
+      "accuracy_std": 0.03762838106706684,
+      "precision_macro": 0.775751805640038,
+      "recall_macro": 0.7763888888888889,
+      "f1_macro": 0.7705680640824594
+    },
+    "Naive Bayes": {
+      "accuracy_mean": 0.8041666666666668,
+      "accuracy_std": 0.024611173814818553,
+      "precision_macro": 0.807509167755686,
+      "recall_macro": 0.8041666666666666,
+      "f1_macro": 0.7928265835410591
+    },
+    "Linear SVM": {
+      "accuracy_mean": 0.826388888888889,
+      "accuracy_std": 0.02707442873558047,
+      "precision_macro": 0.8279674489290528,
+      "recall_macro": 0.826388888888889,
+      "f1_macro": 0.8182019295536266
+    },
+    "Logistic Regression (C=10)": {
+      "accuracy_mean": 0.8319444444444445,
+      "accuracy_std": 0.024611173814818563,
+      "precision_macro": 0.8325366874727784,
+      "recall_macro": 0.8319444444444445,
+      "f1_macro": 0.8250130796676636
+    },
+    "Logistic Regression (C=30)": {
+      "accuracy_mean": 0.8319444444444445,
+      "accuracy_std": 0.024611173814818563,
+      "precision_macro": 0.8326892447920023,
+      "recall_macro": 0.8319444444444445,
+      "f1_macro": 0.8250301377729571
+    }
+  },
+  "chosen_model": "Logistic Regression (C=30)",
+  "per_class": {
+    "Manufacturing": {
+      "precision": 0.7398373983739838,
+      "recall": 0.7583333333333333,
+      "f1": 0.7489711934156379
+    },
+    "Quality": {
+      "precision": 0.875,
+      "recall": 0.875,
+      "f1": 0.875
+    },
+    "Safety": {
+      "precision": 0.7948717948717948,
+      "recall": 0.5166666666666667,
+      "f1": 0.6262626262626263
+    },
+    "R&D": {
+      "precision": 0.9512195121951219,
+      "recall": 0.975,
+      "f1": 0.9629629629629629
+    },
+    "Supply Chain": {
+      "precision": 0.8088235294117647,
+      "recall": 0.9166666666666666,
+      "f1": 0.859375
+    },
+    "HR & Training": {
+      "precision": 0.8142857142857143,
+      "recall": 0.95,
+      "f1": 0.8769230769230769
+    }
+  },
+  "labels": [
+    "Manufacturing",
+    "Quality",
+    "Safety",
+    "R&D",
+    "Supply Chain",
+    "HR & Training"
+  ],
+  "confusion_matrix": [
+    [
+      91,
+      4,
+      9,
+      0,
+      11,
+      5
+    ],
+    [
+      4,
+      105,
+      0,
+      1,
+      10,
+      0
+    ],
+    [
+      23,
+      8,
+      62,
+      4,
+      5,
+      18
+    ],
+    [
+      0,
+      3,
+      0,
+      117,
+      0,
+      0
+    ],
+    [
+      2,
+      0,
+      5,
+      0,
+      110,
+      3
+    ],
+    [
+      3,
+      0,
+      2,
+      1,
+      0,
+      114
+    ]
+  ],
+  "confusion_matrix_normalized": [
+    [
+      0.758,
+      0.033,
+      0.075,
+      0.0,
+      0.092,
+      0.042
+    ],
+    [
+      0.033,
+      0.875,
+      0.0,
+      0.008,
+      0.083,
+      0.0
+    ],
+    [
+      0.192,
+      0.067,
+      0.517,
+      0.033,
+      0.042,
+      0.15
+    ],
+    [
+      0.0,
+      0.025,
+      0.0,
+      0.975,
+      0.0,
+      0.0
+    ],
+    [
+      0.017,
+      0.0,
+      0.042,
+      0.0,
+      0.917,
+      0.025
+    ],
+    [
+      0.025,
+      0.0,
+      0.017,
+      0.008,
+      0.0,
+      0.95
+    ]
+  ],
+  "accuracy_by_language": {
+    "en": 0.8194444444444444,
+    "es": 0.8333333333333334
+  },
+  "phase1_reference": {
+    "holdout_accuracy": 0.75,
+    "cv_accuracy": 0.708,
+    "note": "Phase 1: 48 English-only documents, 4-fold CV"
+  }
+}

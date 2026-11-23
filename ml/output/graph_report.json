@@ -1,0 +1,91 @@
+{
+  "nodes": 142,
+  "edges": 416,
+  "node_types": {
+    "category": 6,
+    "principle": 6,
+    "concept": 38,
+    "type": 8,
+    "department": 12,
+    "document": 72
+  },
+  "relations": {
+    "pillar_of": 4,
+    "supports": 20,
+    "classified_as": 72,
+    "is_a": 72,
+    "owned_by": 72,
+    "describes": 137,
+    "related_to": 39
+  },
+  "connected_components": 1,
+  "density": 0.0416,
+  "most_connected_concepts": [
+    {
+      "id": "concept:validation",
+      "label_es": "Pruebas y validación de prototipos",
+      "degree": 12
+    },
+    {
+      "id": "concept:people-development",
+      "label_es": "Desarrollo de personas",
+      "degree": 11
+    },
+    {
+      "id": "concept:supplier-management",
+      "label_es": "Gestión de proveedores",
+      "degree": 10
+    },
+    {
+      "id": "concept:jit",
+      "label_es": "Justo a tiempo",
+      "degree": 9
+    },
+    {
+      "id": "concept:kaizen",
+      "label_es": "Kaizen (mejora continua)",
+      "degree": 9
+    },
+    {
+      "id": "concept:inspection",
+      "label_es": "Inspección de calidad",
+      "degree": 9
+    },
+    {
+      "id": "concept:standard-work",
+      "label_es": "Trabajo estandarizado",
+      "degree": 7
+    },
+    {
+      "id": "concept:inventory",
+      "label_es": "Control de inventario",
+      "degree": 7
+    }
+  ],
+  "bridge_documents": [
+    {
+      "id": "MFG-004",
+      "betweenness": 0.0564
+    },
+    {
+      "id": "RD-007",
+      "betweenness": 0.0455
+    },
+    {
+      "id": "SC-002",
+      "betweenness": 0.0448
+    },
+    {
+      "id": "MFG-005",
+      "betweenness": 0.0394
+    },
+    {
+      "id": "SAF-007",
+      "betweenness": 0.0343
+    }
+  ],
+  "phase1_reference": {
+    "node_types": 4,
+    "triples": 142
+  }
+}

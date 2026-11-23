@@ -97,7 +97,7 @@ def doc_type(title):
 
 
 def main():
-    docs = json.load(open(BASE / "data" / "toyota_documents.json", encoding="utf-8"))
+    docs = json.load(open(BASE / "toyota_documents_v1.json", encoding="utf-8"))
     triples = list(TRIPLES)
 
     # Document-level relations derived from the corpus

@@ -1,0 +1,1383 @@
+{
+  "dev": [
+    {
+      "q": "¿Qué hago si encuentro un problema en mi estación y necesito ayuda del líder?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-005",
+        "HR-002"
+      ],
+      "intent": "answer",
+      "got": "HR-003",
+      "confidence": 0.21,
+      "correct": false,
+      "answer": "Según **Plan de formación para líderes de equipo** (HR-003 · Capacitación): Los cursos cubren instrucción de trabajo, solución de problemas, coaching y liderazgo.\nTambién puede servirte: MFG-005 — Procedimiento de respuesta al andon en la línea de ensamble.",
+      "rank": 1
+    },
+    {
+      "q": "¿Cuánto tiempo tiene el operador para la puerta delantera?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-001"
+      ],
+      "intent": "answer",
+      "got": "MFG-001",
+      "confidence": 0.251,
+      "correct": true,
+      "answer": "Según **Hoja de trabajo estandarizado - estación de ensamble de puerta delantera** (MFG-001 · Manufactura): Hoja de trabajo estandarizado para la estación de ensamble de la puerta delantera.",
+      "rank": 0
+    },
+    {
+      "q": "¿En qué orden se aprietan los tornillos de la cabeza del motor?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-009"
+      ],
+      "intent": "answer",
+      "got": "MFG-009",
+      "confidence": 0.201,
+      "correct": true,
+      "answer": "Según **Instrucción de trabajo de secuencia de torque en ensamble de motor** (MFG-009 · Manufactura): Los tornillos se aprietan en secuencia cruzada en tres pasadas hasta el torque especificado.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se califica el orden y la limpieza en estampado?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-010"
+      ],
+      "intent": "answer",
+      "got": "MFG-010",
+      "confidence": 0.296,
+      "correct": true,
+      "answer": "Según **Procedimiento de auditoría 5S en el área de estampado** (MFG-010 · Manufactura): Cada semana los supervisores califican clasificar, ordenar, limpiar, estandarizar y disciplina.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué desperdicios se encontraron en la línea de asientos?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-011"
+      ],
+      "intent": "answer",
+      "got": "MFG-011",
+      "confidence": 0.261,
+      "correct": true,
+      "answer": "Según **Mapa de flujo de valor de la línea de instalación de asientos** (MFG-011 · Manufactura): Mapa de flujo de valor de la línea de instalación de asientos. El equipo dibujó el flujo de materiales e información y encontró desperdicio (muda) por espera, exceso de inventario y movimientos innecesarios.",
+      "rank": 0
+    },
+    {
+      "q": "¿Por qué salían cofres con basura en la pintura?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-001"
+      ],
+      "intent": "answer",
+      "got": "QA-001",
+      "confidence": 0.163,
+      "correct": true,
+      "answer": "Según **Análisis de causa raíz de defectos de pintura** (QA-001 · Calidad): Los inspectores encontraron basura incrustada y piel de naranja en los cofres.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué se revisa antes de liberar un carro terminado?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-002"
+      ],
+      "intent": "answer",
+      "got": "QA-002",
+      "confidence": 0.146,
+      "correct": true,
+      "answer": "Según **Lista de verificación de inspección final del vehículo** (QA-002 · Calidad): Los inspectores revisan holguras entre paneles, acabado de pintura, funciones eléctricas, prueba de fugas de agua y prueba de manejo antes de liberar el vehículo.\nTambién puede servirte: RD-010 — Plan de validación de actualizaciones de software inalámbricas.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cuáles son las quejas de garantía más comunes?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-003"
+      ],
+      "intent": "answer",
+      "got": "QA-003",
+      "confidence": 0.221,
+      "correct": true,
+      "answer": "Según **Análisis de reclamos de garantía de clientes del tercer trimestre** (QA-003 · Calidad): Análisis de reclamos de garantía del tercer trimestre. El diagrama de Pareto muestra que los cinco defectos principales representan el 70 por ciento del costo de garantía.\nTambién puede servirte: QA-012 — Minuta del círculo de calidad - queja por ruido en puerta.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué pasó con las carcasas de faros del proveedor?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-004"
+      ],
+      "intent": "answer",
+      "got": "QA-004",
+      "confidence": 0.247,
+      "correct": true,
+      "answer": "Según **Reporte de no conformidad de pieza de proveedor** (QA-004 · Calidad): La inspección de recibo rechazó un lote de carcasas de faros por grietas.",
+      "rank": 0
+    },
+    {
+      "q": "¿El proceso de torque de las ruedas es capaz?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-005"
+      ],
+      "intent": "answer",
+      "got": "QA-005",
+      "confidence": 0.323,
+      "correct": true,
+      "answer": "Según **Control estadístico del proceso de torque** (QA-005 · Calidad): Control estadístico del proceso para el torque de las tuercas de rueda.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se prueba que no entre agua al vehículo?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-009"
+      ],
+      "intent": "answer",
+      "got": "QA-009",
+      "confidence": 0.233,
+      "correct": true,
+      "answer": "Según **Procedimiento de prueba de fugas de agua** (QA-009 · Calidad): Procedimiento para la cabina de prueba de fugas de agua. Cada vehículo se rocía a alta presión durante cuatro minutos y después los inspectores revisan la cabina, la cajuela y los sellos de las puertas con un detector de humedad.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué equipo de protección es obligatorio en la planta?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-001"
+      ],
+      "intent": "answer",
+      "got": "SAF-001",
+      "confidence": 0.28,
+      "correct": true,
+      "answer": "Según **Política de seguridad ocupacional** (SAF-001 · Seguridad): El equipo de protección personal, como lentes de seguridad, guantes y zapatos con casquillo, es obligatorio en la planta.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué pasos sigo antes de darle mantenimiento a un robot energizado?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-002"
+      ],
+      "intent": "answer",
+      "got": "SAF-002",
+      "confidence": 0.19,
+      "correct": true,
+      "answer": "Según **Procedimiento de bloqueo y etiquetado** (SAF-002 · Seguridad): Aislar la energía eléctrica, hidráulica y neumática, colocar candados y etiquetas personales y verificar energía cero antes de entrar a la celda del robot.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué medidas se tomaron después de que un montacargas casi atropella a alguien?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-003"
+      ],
+      "intent": "answer",
+      "got": "SAF-003",
+      "confidence": 0.221,
+      "correct": true,
+      "answer": "Según **Reporte de casi accidente - montacargas** (SAF-003 · Seguridad): Reporte de un casi accidente. Un montacargas estuvo a punto de golpear a un peatón en un cruce ciego del almacén.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué hacer si se derrama solvente?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-005"
+      ],
+      "intent": "answer",
+      "got": "SAF-005",
+      "confidence": 0.306,
+      "correct": true,
+      "answer": "Según **Manejo de químicos y respuesta a derrames** (SAF-005 · Seguridad): Procedimiento de manejo de químicos para solventes de pintura. Ante un derrame se usan kits absorbentes y se evacua si hay vapores.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cada cuándo hay simulacros de evacuación?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-006"
+      ],
+      "intent": "answer",
+      "got": "SAF-006",
+      "confidence": 0.344,
+      "correct": true,
+      "answer": "Según **Plan de evacuación de emergencia** (SAF-006 · Seguridad): Plan de evacuación de emergencia en caso de incendio y sismo. Se hacen simulacros dos veces al año en cada edificio.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo evito una descarga al trabajar con baterías híbridas?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-008"
+      ],
+      "intent": "answer",
+      "got": "SAF-008",
+      "confidence": 0.294,
+      "correct": true,
+      "answer": "Según **Identificación de peligros en el manejo de baterías** (SAF-008 · Seguridad): Identificación de peligros en el manejo de baterías híbridas de alto voltaje.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué necesito para entrar a un tanque o una fosa?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-009"
+      ],
+      "intent": "answer",
+      "got": "SAF-009",
+      "confidence": 0.165,
+      "correct": true,
+      "answer": "Según **Permiso de entrada a espacios confinados** (SAF-009 · Seguridad): Procedimiento de permiso para entrar a espacios confinados como tanques de pintura y fosas.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué resultados dio la prueba del tren híbrido en el dinamómetro?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-001"
+      ],
+      "intent": "answer",
+      "got": "RD-001",
+      "confidence": 0.395,
+      "correct": true,
+      "answer": "Según **Prueba de eficiencia del tren motriz híbrido** (RD-001 · I+D): Reporte de investigación sobre la eficiencia del tren motriz híbrido. Los ingenieros probaron la nueva unidad de control de potencia en el dinamómetro y midieron el rendimiento de combustible y la eficiencia del motor eléctrico en distintos ciclos de manejo.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se validan los frenos de los prototipos?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-002"
+      ],
+      "intent": "answer",
+      "got": "RD-002",
+      "confidence": 0.316,
+      "correct": true,
+      "answer": "Según **Especificación de pruebas del sistema de frenos** (RD-002 · I+D): Especificación técnica para validar el sistema de frenos. Los vehículos prototipo pasan por pruebas de desvanecimiento, frenado en mojado y medición de distancia de frenado.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué tan rápido carga la batería de estado sólido?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-003"
+      ],
+      "intent": "answer",
+      "got": "RD-003",
+      "confidence": 0.469,
+      "correct": true,
+      "answer": "Según **Evaluación de prototipos de batería de estado sólido** (RD-003 · I+D): Evaluación de prototipos de celdas de batería de estado sólido. Los resultados orientan el diseño de la próxima plataforma de vehículos eléctricos de batería.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se redujo la resistencia al aire del prototipo?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-006"
+      ],
+      "intent": "answer",
+      "got": "RD-010",
+      "confidence": 0.197,
+      "correct": false,
+      "answer": "Según **Plan de validación de actualizaciones de software inalámbricas** (RD-010 · I+D): Plan de validación para actualizaciones de software por aire (OTA). Cada actualización se prueba en unidades de banco y vehículos de prueba para confirmar que se instala bien, que puede regresar a la versión anterior si falla la descarga y que pasa las revisiones de ciberseguridad antes de liberarse a los clientes.\nTambién puede servirte: RD-006 — Reporte de túnel de viento aerodinámico.",
+      "rank": 1
+    },
+    {
+      "q": "¿Cómo se prueban las actualizaciones de software por internet?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-010"
+      ],
+      "intent": "answer",
+      "got": "RD-010",
+      "confidence": 0.394,
+      "correct": true,
+      "answer": "Según **Plan de validación de actualizaciones de software inalámbricas** (RD-010 · I+D): Plan de validación para actualizaciones de software por aire (OTA). Cada actualización se prueba en unidades de banco y vehículos de prueba para confirmar que se instala bien, que puede regresar a la versión anterior si falla la descarga y que pasa las revisiones de ciberseguridad antes de liberarse a los clientes.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se pide más material al proveedor cuando se acaba en la línea?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-001"
+      ],
+      "intent": "answer",
+      "got": "QA-004",
+      "confidence": 0.21,
+      "correct": false,
+      "answer": "Según **Reporte de no conformidad de pieza de proveedor** (QA-004 · Calidad): Reporte de no conformidad de una pieza de proveedor. El proveedor debe entregar un reporte 8D de acción correctiva y contener el material sospechoso.",
+      "rank": 1
+    },
+    {
+      "q": "¿Qué porcentaje de entregas llegaron a tiempo?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-002"
+      ],
+      "intent": "answer",
+      "got": "SC-002",
+      "confidence": 0.179,
+      "correct": true,
+      "answer": "Según **Reporte de desempeño de entregas de proveedores** (SC-002 · Cadena de suministro): Reporte de desempeño de entregas de proveedores. Las entregas a tiempo llegaron a 98.5 por ciento.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se preparan los papeles para importar piezas?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-007"
+      ],
+      "intent": "answer",
+      "got": "SC-007",
+      "confidence": 0.439,
+      "correct": true,
+      "answer": "Según **Procedimiento aduanal de importación de piezas** (SC-007 · Cadena de suministro): Procedimiento aduanal para piezas importadas. Logística prepara la factura comercial, la lista de empaque y los documentos de importación.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo llegan los asientos en el orden correcto?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-010"
+      ],
+      "intent": "answer",
+      "got": "SC-010",
+      "confidence": 0.185,
+      "correct": true,
+      "answer": "Según **Entrega de asientos en secuencia** (SC-010 · Cadena de suministro): La planta envía el orden de producción al proveedor de asientos, que los carga en la secuencia exacta de los vehículos en la línea.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué aprende un empleado nuevo su primera semana?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-001"
+      ],
+      "intent": "answer",
+      "got": "HR-001",
+      "confidence": 0.215,
+      "correct": true,
+      "answer": "Según **Programa de inducción para operadores nuevos** (HR-001 · Capacitación): Durante la primera semana los empleados aprenden los valores del Toyota Way, el respeto por las personas y las reglas de la planta, y completan su capacitación de habilidades básicas en el centro de entrenamiento antes de entrar a la línea.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se capacita a la gente para jalar el cordón andon?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-002"
+      ],
+      "intent": "answer",
+      "got": "HR-002",
+      "confidence": 0.481,
+      "correct": true,
+      "answer": "Según **Módulo de capacitación del cordón andon** (HR-002 · Capacitación): Los participantes aprenden cuándo y cómo jalar el cordón andon, practican en una línea simulada y aprueban una evaluación de habilidades.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo conservamos lo que saben los técnicos antes de jubilarse?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-007"
+      ],
+      "intent": "answer",
+      "got": "HR-007",
+      "confidence": 0.149,
+      "correct": true,
+      "answer": "Según **Transferencia de conocimiento de expertos que se jubilan** (HR-007 · Capacitación): Programa de transferencia de conocimiento de técnicos experimentados que se van a jubilar.\nTambién puede servirte: SAF-010 — Programa de conservación auditiva en el área de estampado.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo puedo proponer una idea de mejora?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-008"
+      ],
+      "intent": "answer",
+      "got": "HR-008",
+      "confidence": 0.246,
+      "correct": true,
+      "answer": "Según **Lineamientos del sistema de sugerencias de empleados** (HR-008 · Capacitación): Los integrantes del equipo proponen ideas de mejora, los supervisores las revisan y los empleados reciben reconocimiento y premios por las sugerencias que se implementan.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se mide si un curso sirvió?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-011"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.09,
+      "correct": false,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación).",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué es el jidoka?",
+      "lang": "es",
+      "kind": "definition",
+      "expected": [
+        "concept:jidoka"
+      ],
+      "intent": "definition",
+      "got": "MFG-005",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Jidoka**: Pilar del TPS, también llamado automatización con toque humano: la máquina o el operador detiene el proceso en cuanto aparece una anomalía, para que los defectos no pasen al siguiente proceso.\nEs parte de: Sistema de Producción Toyota.\nLo encuentras aplicado en: MFG-005 (Procedimiento de respuesta al andon en la línea de ensamble)."
+    },
+    {
+      "q": "¿Qué significa heijunka?",
+      "lang": "es",
+      "kind": "definition",
+      "expected": [
+        "concept:heijunka"
+      ],
+      "intent": "definition",
+      "got": "MFG-002",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Heijunka**: Nivelación de la producción: mezclar modelos y volúmenes de forma pareja durante el turno para evitar picos y mantener un flujo estable.\nEs parte de: Justo a tiempo.\nLo encuentras aplicado en: MFG-002 (Programa de producción justo a tiempo para la línea Tacoma)."
+    },
+    {
+      "q": "¿Qué documentos hay de seguridad?",
+      "lang": "es",
+      "kind": "category_list",
+      "expected": [
+        "category:Safety"
+      ],
+      "intent": "list",
+      "got": "Safety",
+      "confidence": null,
+      "correct": true,
+      "answer": "Hay 12 documentos de Seguridad:\n• SAF-001 — Política de seguridad ocupacional\n• SAF-002 — Procedimiento de bloqueo y etiquetado\n• SAF-003 — Reporte de casi accidente - montacargas\n• SAF-004 — Evaluación de riesgos ergonómicos\n• SAF-005 — Manejo de químicos y respuesta a derrames\n• SAF-006 — Plan de evacuación de emergencia\n• SAF-007 — Reporte mensual de desempeño en seguridad\n• SAF-008 — Identificación de peligros en el manejo de baterías\n• SAF-009 — Permiso de entrada a espacios confinados\n• SAF-010 — Programa de conservación auditiva en el área de estampado\n• SAF-011 — Inspección de cercas y cortinas de luz en celdas de robots\n• SAF-012 — Prevención de estrés por calor en verano"
+    },
+    {
+      "q": "¿Cuánto cuesta un RAV4 2026?",
+      "lang": "es",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0,
+      "correct": true,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación)."
+    },
+    {
+      "q": "¿Quién ganó el partido de los Rayados?",
+      "lang": "es",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.132,
+      "correct": true,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación)."
+    },
+    {
+      "q": "What should the team leader do when the line is stopped by an operator?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "MFG-005"
+      ],
+      "intent": "answer",
+      "got": "MFG-005",
+      "confidence": 0.246,
+      "correct": true,
+      "answer": "According to **Andon response procedure on the assembly line** (MFG-005 · Manufacturing): When an operator pulls the andon cord the team leader arrives within the fixed position stop, solves the abnormality and restarts the line.\nYou may also find useful: HR-003 — Team leader development curriculum.",
+      "rank": 0
+    },
+    {
+      "q": "How did the welding team cut setup time?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "MFG-004"
+      ],
+      "intent": "answer",
+      "got": "MFG-004",
+      "confidence": 0.185,
+      "correct": true,
+      "answer": "According to **Kaizen event - welding cell changeover** (MFG-004 · Manufacturing): Kaizen event on the welding cell. The team applied SMED to reduce die changeover time on the stamping press and robot welding fixtures from 22 minutes to 9 minutes, increasing line uptime and production output.\nYou may also find useful: MFG-002 — Just-in-time production schedule for the Tacoma line.",
+      "rank": 0
+    },
+    {
+      "q": "Which suppliers missed their delivery windows?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "SC-002"
+      ],
+      "intent": "answer",
+      "got": "SC-002",
+      "confidence": 0.364,
+      "correct": true,
+      "answer": "According to **Supplier delivery performance report** (SC-002 · Supply Chain): Two suppliers missed delivery windows due to transport delays and must submit recovery plans to logistics.",
+      "rank": 0
+    },
+    {
+      "q": "How do we keep workers safe from loud noise in stamping?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "SAF-010"
+      ],
+      "intent": "answer",
+      "got": "SAF-010",
+      "confidence": 0.156,
+      "correct": true,
+      "answer": "According to **Hearing conservation program in the stamping area** (SAF-010 · Safety): Hearing conservation program for the stamping area, where noise exceeds 85 decibels.",
+      "rank": 0
+    },
+    {
+      "q": "What were the results of the crash simulation?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "RD-004"
+      ],
+      "intent": "answer",
+      "got": "RD-004",
+      "confidence": 0.461,
+      "correct": true,
+      "answer": "According to **Crash simulation of new chassis** (RD-004 · R&D): Crash simulation study using finite element analysis on the new chassis design.",
+      "rank": 0
+    },
+    {
+      "q": "How are trainers supposed to teach a new job?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "HR-006"
+      ],
+      "intent": "answer",
+      "got": "HR-006",
+      "confidence": 0.254,
+      "correct": true,
+      "answer": "According to **Job instruction training method** (HR-006 · HR & Training): Job instruction training method for trainers. Break down the job into important steps and key points, demonstrate, let the learner practice and follow up until the employee performs the task correctly.",
+      "rank": 0
+    },
+    {
+      "q": "What is kanban?",
+      "lang": "en",
+      "kind": "definition",
+      "expected": [
+        "concept:kanban"
+      ],
+      "intent": "definition",
+      "got": "SC-001",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Kanban**: A card or signal that authorizes production or delivery of exactly the parts that were used, so material is pulled by real consumption.\nPart of: Just-in-time.\nYou can see it applied in: SC-001 (Kanban replenishment procedure)."
+    },
+    {
+      "q": "What is the weather in Monterrey today?",
+      "lang": "en",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.087,
+      "correct": true,
+      "answer": "I couldn't find that in the system's documents. I can only answer from Toyota's repository (manufacturing, quality, safety, R&D, supply chain and training)."
+    },
+    {
+      "turns": [
+        "Háblame del plan de evacuación",
+        "¿cada cuánto se practica?"
+      ],
+      "expected": [
+        "SAF-006"
+      ],
+      "got": "SAF-006",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "What does the warranty analysis say?",
+        "which defects cost the most?"
+      ],
+      "expected": [
+        "QA-003"
+      ],
+      "got": "QA-003",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "¿Cómo funciona el milk run?",
+        "¿y qué se reduce con eso?"
+      ],
+      "expected": [
+        "SC-003"
+      ],
+      "got": "SC-003",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "Quiero ver el estudio de ruido y vibración",
+        "¿qué cambiaron en el motor?"
+      ],
+      "expected": [
+        "RD-009"
+      ],
+      "got": "RD-009",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "¿Qué dice el plan de evacuación?",
+        "¿Cuántos accidentes con tiempo perdido hubo en el reporte mensual de seguridad?"
+      ],
+      "expected": [
+        "SAF-007"
+      ],
+      "got": "SAF-007",
+      "intent": "answer",
+      "usedContext": false,
+      "correct": true
+    },
+    {
+      "turns": [
+        "Explain the kanban procedure",
+        "How are seats delivered in sequence to the line?"
+      ],
+      "expected": [
+        "SC-010"
+      ],
+      "got": "SC-010",
+      "intent": "answer",
+      "usedContext": false,
+      "correct": true
+    }
+  ],
+  "test": [
+    {
+      "q": "Necesito el programa de producción nivelado de la Tacoma",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-002"
+      ],
+      "intent": "answer",
+      "got": "MFG-002",
+      "confidence": 0.44,
+      "correct": true,
+      "answer": "Según **Programa de producción justo a tiempo para la línea Tacoma** (MFG-002 · Manufactura): Programa de producción justo a tiempo para la línea de ensamble. La caja heijunka nivela la mezcla de modelos durante el turno para que la línea produzca cabinas, cajas y chasis en lotes pequeños de acuerdo con la demanda del cliente.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cuáles son las etapas por las que pasa una carrocería en pintura?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-003"
+      ],
+      "intent": "answer",
+      "got": "QA-010",
+      "confidence": 0.123,
+      "correct": false,
+      "answer": "Según **Puerta de calidad al final del taller de pintura** (QA-010 · Calidad): Puerta de calidad a la salida del taller de pintura. Las carrocerías defectuosas van al área de retoque y el resultado alimenta la gráfica diaria de defectos.\nTambién puede servirte: MFG-003 — Secuencia del proceso de pintura.",
+      "rank": 1
+    },
+    {
+      "q": "¿Qué mantenimiento diario hacen los operadores a los robots de soldadura?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-007"
+      ],
+      "intent": "answer",
+      "got": "MFG-007",
+      "confidence": 0.285,
+      "correct": true,
+      "answer": "Según **Plan de mantenimiento productivo total para robots** (MFG-007 · Manufactura): Plan de mantenimiento productivo total (TPM) para robots de soldadura y transportadores.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se repartió el trabajo entre estaciones para cumplir el takt?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-008"
+      ],
+      "intent": "answer",
+      "got": "MFG-001",
+      "confidence": 0.223,
+      "correct": false,
+      "answer": "Según **Hoja de trabajo estandarizado - estación de ensamble de puerta delantera** (MFG-001 · Manufactura): Hoja de trabajo estandarizado para la estación de ensamble de la puerta delantera. El takt time es de 58 segundos.\nTambién puede servirte: MFG-008 — Estudio de balanceo de la línea de ensamble final.",
+      "rank": 1
+    },
+    {
+      "q": "¿Qué hace un supervisor en su recorrido por el piso?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-012"
+      ],
+      "intent": "answer",
+      "got": "MFG-012",
+      "confidence": 0.211,
+      "correct": true,
+      "answer": "Según **Guía de recorrido genba para supervisores de producción** (MFG-012 · Manufactura): Los supervisores van al piso de producción, observan cada proceso, platican con los operadores sobre los problemas y comparan el tablero de producción con la meta por hora.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué hay que revisar en la prensa antes de producir costados?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "MFG-006"
+      ],
+      "intent": "answer",
+      "got": "MFG-006",
+      "confidence": 0.224,
+      "correct": true,
+      "answer": "Según **Instrucciones de operación de la prensa de estampado** (MFG-006 · Manufactura): La producción de costados y cofres sigue los tamaños de lote programados.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué falla tenía la bomba de gasolina?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-006"
+      ],
+      "intent": "answer",
+      "got": "QA-006",
+      "confidence": 0.309,
+      "correct": true,
+      "answer": "Según **Investigación de llamado a revisión - bomba de gasolina** (QA-006 · Calidad): Un defecto en el impulsor de la bomba de gasolina puede apagar el motor.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué encontró la auditoría en carrocería?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-007"
+      ],
+      "intent": "answer",
+      "got": "QA-007",
+      "confidence": 0.306,
+      "correct": true,
+      "answer": "Según **Auditoría de calidad del taller de carrocería** (QA-007 · Calidad): Auditoría interna de calidad del taller de carrocería. Los auditores revisaron la calidad de los puntos de soldadura, la exactitud dimensional con la máquina de medición por coordenadas y el registro de resultados de inspección.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo detectamos clips faltantes automáticamente?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-008"
+      ],
+      "intent": "answer",
+      "got": "QA-008",
+      "confidence": 0.224,
+      "correct": true,
+      "answer": "Según **Revisión de dispositivos poka-yoke a prueba de errores** (QA-008 · Calidad): Los sensores detectan clips faltantes y variantes de pieza equivocadas para atrapar los defectos en su origen.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué defectos se buscan a la salida de pintura?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-010"
+      ],
+      "intent": "answer",
+      "got": "QA-010",
+      "confidence": 0.204,
+      "correct": true,
+      "answer": "Según **Puerta de calidad al final del taller de pintura** (QA-010 · Calidad): Puerta de calidad a la salida del taller de pintura. Las carrocerías defectuosas van al área de retoque y el resultado alimenta la gráfica diaria de defectos.",
+      "rank": 0
+    },
+    {
+      "q": "¿Son confiables nuestras llaves de torque para medir?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-011"
+      ],
+      "intent": "answer",
+      "got": "QA-011",
+      "confidence": 0.312,
+      "correct": true,
+      "answer": "Según **Estudio R&R de llaves de torque** (QA-011 · Calidad): Análisis del sistema de medición para llaves de torque. Tres evaluadores midieron diez piezas dos veces para calcular la repetibilidad y la reproducibilidad.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué causaba el ruido en la puerta que reportaron los clientes?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "QA-012"
+      ],
+      "intent": "answer",
+      "got": "QA-012",
+      "confidence": 0.445,
+      "correct": true,
+      "answer": "Según **Minuta del círculo de calidad - queja por ruido en puerta** (QA-012 · Calidad): Minuta de la reunión del círculo de calidad sobre un ruido en la puerta reportado por clientes.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo reducir lesiones de hombro al trabajar debajo del carro?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-004"
+      ],
+      "intent": "answer",
+      "got": "SAF-004",
+      "confidence": 0.286,
+      "correct": true,
+      "answer": "Según **Evaluación de riesgos ergonómicos** (SAF-004 · Seguridad): Evaluación de riesgos ergonómicos para el trabajo con los brazos arriba de la cabeza debajo del vehículo. Los operadores mostraron riesgo de lesión en el hombro.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cuántos accidentes tuvimos este mes?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-007"
+      ],
+      "intent": "answer",
+      "got": "SAF-003",
+      "confidence": 0.188,
+      "correct": false,
+      "answer": "Según **Reporte de casi accidente - montacargas** (SAF-003 · Seguridad): Reporte de un casi accidente. Un montacargas estuvo a punto de golpear a un peatón en un cruce ciego del almacén.",
+      "rank": 1
+    },
+    {
+      "q": "¿Qué se revisa en las cortinas de luz de las celdas?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-011"
+      ],
+      "intent": "answer",
+      "got": "SAF-011",
+      "confidence": 0.421,
+      "correct": true,
+      "answer": "Según **Inspección de cercas y cortinas de luz en celdas de robots** (SAF-011 · Seguridad): Los técnicos prueban las cortinas de luz, los interruptores de las puertas y los botones de paro de emergencia, y confirman que el robot se detiene antes de que una persona alcance la zona de peligro.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué hacemos para que nadie se desmaye por el calor cerca de los hornos?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SAF-012"
+      ],
+      "intent": "answer",
+      "got": "SAF-012",
+      "confidence": 0.223,
+      "correct": true,
+      "answer": "Según **Prevención de estrés por calor en verano** (SAF-012 · Seguridad): Las áreas cerca de los hornos tienen ventiladores extra y estaciones de enfriamiento, los trabajadores toman descansos para hidratarse cada hora y los supervisores vigilan señales de agotamiento por calor como mareo y calambres.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cuánto duran las pilas de hidrógeno?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-005"
+      ],
+      "intent": "answer",
+      "got": "RD-005",
+      "confidence": 0.268,
+      "correct": true,
+      "answer": "Según **Durabilidad de la pila de celdas de hidrógeno** (RD-005 · I+D): Estudio de durabilidad de la pila de celdas de combustible de hidrógeno.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo funciona el frenado antes de un choque con cámara y radar?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-007"
+      ],
+      "intent": "answer",
+      "got": "RD-007",
+      "confidence": 0.272,
+      "correct": true,
+      "answer": "Según **Diseño de fusión de sensores para asistencia al conductor** (RD-007 · I+D): La arquitectura de software combina datos de cámara y radar para mantener el carril y frenar antes de una colisión.",
+      "rank": 0
+    },
+    {
+      "q": "¿Conviene usar aluminio o fibra de carbono en la carrocería?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-008"
+      ],
+      "intent": "answer",
+      "got": "RD-008",
+      "confidence": 0.354,
+      "correct": true,
+      "answer": "Según **Investigación de materiales ligeros** (RD-008 · I+D): Los ingenieros compararon acero de alta resistencia, aluminio y fibra de carbono para paneles de carrocería, evaluando la reducción de peso, el costo y la facilidad de fabricación para futuros diseños.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo bajaron el ruido dentro de la cabina del sedán?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-009"
+      ],
+      "intent": "answer",
+      "got": "RD-009",
+      "confidence": 0.168,
+      "correct": true,
+      "answer": "Según **Reporte de pruebas de ruido, vibración y aspereza** (RD-009 · I+D): Reporte de pruebas NVH del nuevo prototipo sedán. Micrófonos y acelerómetros midieron el ruido y la vibración en la cabina en caminos irregulares y a velocidad de carretera.",
+      "rank": 0
+    },
+    {
+      "q": "¿Aguanta la cera nueva la niebla salina?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-011"
+      ],
+      "intent": "answer",
+      "got": "RD-011",
+      "confidence": 0.235,
+      "correct": true,
+      "answer": "Según **Prueba de durabilidad contra corrosión de recubrimientos inferiores** (RD-011 · I+D): Los paneles recubiertos pasaron 1,000 horas en la cámara de niebla salina y se revisaron en busca de óxido y ampollas.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se enfrían las baterías durante la carga rápida?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "RD-012"
+      ],
+      "intent": "answer",
+      "got": "RD-012",
+      "confidence": 0.21,
+      "correct": true,
+      "answer": "Según **Simulación de gestión térmica de la batería** (RD-012 · I+D): Los ingenieros modelaron el flujo del refrigerante y la temperatura de las celdas durante la carga rápida y en clima caluroso, y redimensionaron la placa de enfriamiento para mantener las celdas por debajo de 45 grados.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo funciona la ruta que recoge piezas de varios proveedores?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-003"
+      ],
+      "intent": "answer",
+      "got": "SC-003",
+      "confidence": 0.275,
+      "correct": true,
+      "answer": "Según **Plan de rutas de recolección milk run** (SC-003 · Cadena de suministro): Un camión sigue una ruta fija recogiendo piezas de varios proveedores locales en horarios programados, lo que reduce el costo de transporte y el inventario y sincroniza las entregas con la producción.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué reglas deben cumplir nuestros proveedores?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-004"
+      ],
+      "intent": "answer",
+      "got": "SC-004",
+      "confidence": 0.254,
+      "correct": true,
+      "answer": "Según **Código de conducta para proveedores** (SC-004 · Cadena de suministro): Los proveedores deben cumplir las leyes laborales, las regulaciones ambientales y las reglas contra la corrupción.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué hicimos para no quedarnos sin chips?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-005"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.161,
+      "correct": false,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación).",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué pasa con los contenedores de plástico vacíos?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-009"
+      ],
+      "intent": "answer",
+      "got": "SC-009",
+      "confidence": 0.188,
+      "correct": true,
+      "answer": "Según **Gestión de empaques y contenedores retornables** (SC-009 · Cadena de suministro): Los proveedores envían las piezas en contenedores de plástico estándar que se limpian y se regresan en el siguiente camión.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo se cuenta el inventario sin parar la planta?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-011"
+      ],
+      "intent": "answer",
+      "got": "SC-011",
+      "confidence": 0.331,
+      "correct": true,
+      "answer": "Según **Procedimiento de conteo cíclico de inventario** (SC-011 · Cadena de suministro): Cada día se cuentan algunas ubicaciones en lugar de parar la planta para un inventario completo.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo ahorramos en fletes?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "SC-012"
+      ],
+      "intent": "answer",
+      "got": "SC-012",
+      "confidence": 0.272,
+      "correct": true,
+      "answer": "Según **Selección de transportistas y revisión de costos de flete** (SC-012 · Cadena de suministro): Revisión de transportistas y costos de flete. El nuevo plan baja el costo de flete en 12 por ciento.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué cursos toma un futuro líder de equipo?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-003"
+      ],
+      "intent": "answer",
+      "got": "HR-003",
+      "confidence": 0.252,
+      "correct": true,
+      "answer": "Según **Plan de formación para líderes de equipo** (HR-003 · Capacitación): Plan de estudios para formar líderes de equipo. Los cursos cubren instrucción de trabajo, solución de problemas, coaching y liderazgo.",
+      "rank": 0
+    },
+    {
+      "q": "¿Quién está certificado en cada proceso de ensamble?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-004"
+      ],
+      "intent": "answer",
+      "got": "HR-004",
+      "confidence": 0.271,
+      "correct": true,
+      "answer": "Según **Matriz de habilidades del grupo de ensamble** (HR-004 · Capacitación): La matriz muestra qué empleados están certificados en cada proceso y planea la capacitación cruzada para que el equipo pueda cubrir ausencias y rotación de puestos.",
+      "rank": 0
+    },
+    {
+      "q": "¿Cómo funcionan las evaluaciones de desempeño?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-005"
+      ],
+      "intent": "answer",
+      "got": "HR-005",
+      "confidence": 0.312,
+      "correct": true,
+      "answer": "Según **Política de evaluación de desempeño y carrera** (HR-005 · Capacitación): Política de evaluación del desempeño. Empleados y gerentes fijan metas anuales, tienen una reunión de retroalimentación a medio año y una evaluación final.",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué pasa si falto al trabajo sin avisar?",
+      "lang": "es",
+      "kind": "document_question",
+      "expected": [
+        "HR-012"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.062,
+      "correct": false,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación).",
+      "rank": 0
+    },
+    {
+      "q": "¿Qué es el poka-yoke?",
+      "lang": "es",
+      "kind": "definition",
+      "expected": [
+        "concept:poka-yoke"
+      ],
+      "intent": "definition",
+      "got": "QA-008",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Poka-yoke**: Un dispositivo o método a prueba de errores que hace imposible equivocarse o detecta el error al instante, para atrapar los defectos en su origen.\nEs parte de: Jidoka.\nLo encuentras aplicado en: QA-008 (Revisión de dispositivos poka-yoke a prueba de errores)."
+    },
+    {
+      "q": "Explícame qué es el takt time",
+      "lang": "es",
+      "kind": "definition",
+      "expected": [
+        "concept:takt"
+      ],
+      "intent": "definition",
+      "got": "MFG-001",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Takt time**: El ritmo de producción que corresponde a la demanda del cliente: el tiempo disponible dividido entre las unidades requeridas.\nEs parte de: Justo a tiempo.\nLo encuentras aplicado en: MFG-001 (Hoja de trabajo estandarizado - estación de ensamble de puerta delantera); MFG-008 (Estudio de balanceo de la línea de ensamble final)."
+    },
+    {
+      "q": "List the supply chain documents",
+      "lang": "en",
+      "kind": "category_list",
+      "expected": [
+        "category:Supply Chain"
+      ],
+      "intent": "list",
+      "got": "Supply Chain",
+      "confidence": null,
+      "correct": true,
+      "answer": "There are 12 Supply Chain documents:\n• SC-001 — Kanban replenishment procedure\n• SC-002 — Supplier delivery performance report\n• SC-003 — Milk run logistics route plan\n• SC-004 — Supplier code of conduct\n• SC-005 — Semiconductor shortage risk plan\n• SC-006 — Inbound parts warehouse layout\n• SC-007 — Customs import procedure for parts\n• SC-008 — Supplier capacity planning review\n• SC-009 — Returnable packaging and container management\n• SC-010 — Just-in-sequence delivery of seats\n• SC-011 — Inventory cycle count procedure\n• SC-012 — Freight carrier selection and transport cost review"
+    },
+    {
+      "q": "¿Cuál es el sueldo de un ingeniero en Toyota?",
+      "lang": "es",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "fallback",
+      "got": null,
+      "confidence": 0.134,
+      "correct": true,
+      "answer": "No encontré información sobre eso en los documentos del sistema. Solo puedo responder con base en el repositorio de Toyota (manufactura, calidad, seguridad, I+D, cadena de suministro y capacitación)."
+    },
+    {
+      "q": "Recomiéndame una película",
+      "lang": "es",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "answer",
+      "got": "SAF-004",
+      "confidence": 0.154,
+      "correct": false,
+      "answer": "Según **Evaluación de riesgos ergonómicos** (SAF-004 · Seguridad): Se recomendaron dispositivos de asistencia para levantar y rotación de puestos para prevenir lesiones y trastornos musculoesqueléticos."
+    },
+    {
+      "q": "Where do I find the takt time for the front door station?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "MFG-001"
+      ],
+      "intent": "answer",
+      "got": "MFG-001",
+      "confidence": 0.435,
+      "correct": true,
+      "answer": "According to **Standardized work sheet - front door assembly station** (MFG-001 · Manufacturing): Standardized work sheet for the front door assembly station. Takt time is 58 seconds.",
+      "rank": 0
+    },
+    {
+      "q": "Why did the hoods have orange peel?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "QA-001"
+      ],
+      "intent": "answer",
+      "got": "QA-001",
+      "confidence": 0.166,
+      "correct": true,
+      "answer": "According to **Paint defect root cause analysis** (QA-001 · Quality): Quality report on paint defects. Inspectors found dirt inclusions and orange peel on hoods.",
+      "rank": 0
+    },
+    {
+      "q": "What permit do I need to go into a paint tank?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "SAF-009"
+      ],
+      "intent": "answer",
+      "got": "SAF-009",
+      "confidence": 0.21,
+      "correct": true,
+      "answer": "According to **Confined space entry permit** (SAF-009 · Safety): Permit procedure for entering confined spaces such as paint tanks and pits.",
+      "rank": 0
+    },
+    {
+      "q": "How are over-the-air updates checked before release?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "RD-010"
+      ],
+      "intent": "answer",
+      "got": "RD-010",
+      "confidence": 0.36,
+      "correct": true,
+      "answer": "According to **Over-the-air software update validation plan** (RD-010 · R&D): Validation plan for over-the-air software updates. Each update is tested on bench units and test vehicles for installation success, rollback after a failed download and cybersecurity checks before it is released to customers.",
+      "rank": 0
+    },
+    {
+      "q": "Do we have enough supplier capacity for next year?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "SC-008"
+      ],
+      "intent": "answer",
+      "got": "SC-008",
+      "confidence": 0.399,
+      "correct": true,
+      "answer": "According to **Supplier capacity planning review** (SC-008 · Supply Chain): Purchasing shared the production forecast and suppliers confirmed capacity for next year volumes.",
+      "rank": 0
+    },
+    {
+      "q": "How do new engineers get a mentor?",
+      "lang": "en",
+      "kind": "document_question",
+      "expected": [
+        "HR-010"
+      ],
+      "intent": "answer",
+      "got": "HR-010",
+      "confidence": 0.372,
+      "correct": true,
+      "answer": "According to **Mentoring program for new engineers** (HR-010 · HR & Training): Mentoring program for newly hired engineers. Each new engineer is paired with a senior mentor for twelve months, rotates through the shop floor and presents a first improvement project to plant management at the end of the year.",
+      "rank": 0
+    },
+    {
+      "q": "What does genba mean?",
+      "lang": "en",
+      "kind": "definition",
+      "expected": [
+        "concept:genba"
+      ],
+      "intent": "definition",
+      "got": "MFG-012",
+      "confidence": null,
+      "correct": true,
+      "answer": "**Genba (go and see)**: The real place where work happens. Toyota leaders go to the genba to see problems with their own eyes.\nPart of: Kaizen (continuous improvement).\nYou can see it applied in: MFG-012 (Genba walk guide for production supervisors); HR-010 (Mentoring program for new engineers)."
+    },
+    {
+      "q": "Who is the CEO of Toyota?",
+      "lang": "en",
+      "kind": "out_of_scope",
+      "expected": [
+        "fallback"
+      ],
+      "intent": "answer",
+      "got": "HR-001",
+      "confidence": 0.155,
+      "correct": false,
+      "answer": "According to **New operator onboarding program** (HR-001 · HR & Training): During the first week employees learn Toyota Way values, respect for people, plant rules and complete basic skills training in the training center before joining the line."
+    },
+    {
+      "turns": [
+        "¿Qué dice el reporte del casi accidente con el montacargas?",
+        "¿qué contramedidas se pusieron?"
+      ],
+      "expected": [
+        "SAF-003"
+      ],
+      "got": "SAF-003",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "Tell me about the solid state battery evaluation",
+        "how long does it take to charge?"
+      ],
+      "expected": [
+        "RD-003"
+      ],
+      "got": "RD-003",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "Busco la política de evaluación de desempeño",
+        "¿cada cuándo hay retroalimentación?"
+      ],
+      "expected": [
+        "HR-005"
+      ],
+      "got": "HR-005",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    },
+    {
+      "turns": [
+        "¿Qué es el procedimiento de entrega en secuencia de asientos?",
+        "¿en cuánto tiempo debe llegar el camión?"
+      ],
+      "expected": [
+        "SC-010"
+      ],
+      "got": "SC-010",
+      "intent": "answer",
+      "usedContext": true,
+      "correct": true
+    }
+  ]
+}

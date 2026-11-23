@@ -1,0 +1,516 @@
+{
+  "generated_at": "2026-11-23T21:37:13.908Z",
+  "corpus": {
+    "documents": 72,
+    "languages": [
+      "es",
+      "en"
+    ],
+    "concepts": 44
+  },
+  "classification": {
+    "protocol": "4-fold StratifiedGroupKFold x 5 repeats; groups = document id (both language versions of a document stay in the same fold)",
+    "n_documents": 72,
+    "n_samples": 144,
+    "models": {
+      "Phase 1 baseline (English words, no stemming) + Logistic Regression": {
+        "accuracy_mean": 0.7763888888888889,
+        "accuracy_std": 0.03762838106706684,
+        "precision_macro": 0.775751805640038,
+        "recall_macro": 0.7763888888888889,
+        "f1_macro": 0.7705680640824594
+      },
+      "Naive Bayes": {
+        "accuracy_mean": 0.8041666666666668,
+        "accuracy_std": 0.024611173814818553,
+        "precision_macro": 0.807509167755686,
+        "recall_macro": 0.8041666666666666,
+        "f1_macro": 0.7928265835410591
+      },
+      "Linear SVM": {
+        "accuracy_mean": 0.826388888888889,
+        "accuracy_std": 0.02707442873558047,
+        "precision_macro": 0.8279674489290528,
+        "recall_macro": 0.826388888888889,
+        "f1_macro": 0.8182019295536266
+      },
+      "Logistic Regression (C=10)": {
+        "accuracy_mean": 0.8319444444444445,
+        "accuracy_std": 0.024611173814818563,
+        "precision_macro": 0.8325366874727784,
+        "recall_macro": 0.8319444444444445,
+        "f1_macro": 0.8250130796676636
+      },
+      "Logistic Regression (C=30)": {
+        "accuracy_mean": 0.8319444444444445,
+        "accuracy_std": 0.024611173814818563,
+        "precision_macro": 0.8326892447920023,
+        "recall_macro": 0.8319444444444445,
+        "f1_macro": 0.8250301377729571
+      }
+    },
+    "chosen_model": "Logistic Regression (C=30)",
+    "per_class": {
+      "Manufacturing": {
+        "precision": 0.7398373983739838,
+        "recall": 0.7583333333333333,
+        "f1": 0.7489711934156379
+      },
+      "Quality": {
+        "precision": 0.875,
+        "recall": 0.875,
+        "f1": 0.875
+      },
+      "Safety": {
+        "precision": 0.7948717948717948,
+        "recall": 0.5166666666666667,
+        "f1": 0.6262626262626263
+      },
+      "R&D": {
+        "precision": 0.9512195121951219,
+        "recall": 0.975,
+        "f1": 0.9629629629629629
+      },
+      "Supply Chain": {
+        "precision": 0.8088235294117647,
+        "recall": 0.9166666666666666,
+        "f1": 0.859375
+      },
+      "HR & Training": {
+        "precision": 0.8142857142857143,
+        "recall": 0.95,
+        "f1": 0.8769230769230769
+      }
+    },
+    "labels": [
+      "Manufacturing",
+      "Quality",
+      "Safety",
+      "R&D",
+      "Supply Chain",
+      "HR & Training"
+    ],
+    "confusion_matrix": [
+      [
+        91,
+        4,
+        9,
+        0,
+        11,
+        5
+      ],
+      [
+        4,
+        105,
+        0,
+        1,
+        10,
+        0
+      ],
+      [
+        23,
+        8,
+        62,
+        4,
+        5,
+        18
+      ],
+      [
+        0,
+        3,
+        0,
+        117,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        5,
+        0,
+        110,
+        3
+      ],
+      [
+        3,
+        0,
+        2,
+        1,
+        0,
+        114
+      ]
+    ],
+    "confusion_matrix_normalized": [
+      [
+        0.758,
+        0.033,
+        0.075,
+        0,
+        0.092,
+        0.042
+      ],
+      [
+        0.033,
+        0.875,
+        0,
+        0.008,
+        0.083,
+        0
+      ],
+      [
+        0.192,
+        0.067,
+        0.517,
+        0.033,
+        0.042,
+        0.15
+      ],
+      [
+        0,
+        0.025,
+        0,
+        0.975,
+        0,
+        0
+      ],
+      [
+        0.017,
+        0,
+        0.042,
+        0,
+        0.917,
+        0.025
+      ],
+      [
+        0.025,
+        0,
+        0.017,
+        0.008,
+        0,
+        0.95
+      ]
+    ],
+    "accuracy_by_language": {
+      "en": 0.8194444444444444,
+      "es": 0.8333333333333334
+    },
+    "phase1_reference": {
+      "holdout_accuracy": 0.75,
+      "cv_accuracy": 0.708,
+      "note": "Phase 1: 48 English-only documents, 4-fold CV"
+    }
+  },
+  "recommender_content": {
+    "random baseline": {
+      "precision@3": 0.194,
+      "precision@5": 0.192,
+      "precision@5_same_category": 0.147
+    },
+    "cosine only": {
+      "precision@3": 0.704,
+      "precision@5": 0.656,
+      "precision@5_same_category": 0.569
+    },
+    "hybrid (cosine + ontology)": {
+      "precision@3": 0.931,
+      "precision@5": 0.908,
+      "precision@5_same_category": 0.75
+    },
+    "avg_categories_in_top5": 1.81,
+    "catalog_coverage": 1
+  },
+  "recommender_history": {
+    "protocol": "120 simulated single-topic sessions (3 opened documents + 1 search) and 120 topic-change sessions (2 older documents from one category, then 2 recent ones from another).",
+    "precision_at_5_same_category": 0.83,
+    "precision_at_5_category_or_concept": 0.9633333333333334,
+    "random_baseline_same_category": 0.15492957746478872,
+    "recent_topic_share_after_change": 0.5383333333333333
+  },
+  "chatbot": {
+    "dev": {
+      "n_questions": 51,
+      "accuracy": 0.9215686274509803,
+      "correct": 47,
+      "by_kind": {
+        "document_question": {
+          "n": 38,
+          "accuracy": 0.8947368421052632
+        },
+        "definition": {
+          "n": 3,
+          "accuracy": 1
+        },
+        "category_list": {
+          "n": 1,
+          "accuracy": 1
+        },
+        "out_of_scope": {
+          "n": 3,
+          "accuracy": 1
+        }
+      },
+      "conversations": {
+        "n": 6,
+        "accuracy": 1
+      },
+      "by_language": {
+        "es": {
+          "n": 37,
+          "accuracy": 0.8918918918918919
+        },
+        "en": {
+          "n": 8,
+          "accuracy": 1
+        }
+      },
+      "retrieval": {
+        "n": 38,
+        "precision_at_1": 0.9210526315789473,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9605263157894737
+      },
+      "out_of_scope_detection": {
+        "precision": 0.75,
+        "recall": 1
+      },
+      "avg_response_ms": 0.69
+    },
+    "test": {
+      "n_questions": 49,
+      "accuracy": 0.8571428571428571,
+      "correct": 42,
+      "by_kind": {
+        "document_question": {
+          "n": 38,
+          "accuracy": 0.868421052631579
+        },
+        "definition": {
+          "n": 3,
+          "accuracy": 1
+        },
+        "category_list": {
+          "n": 1,
+          "accuracy": 1
+        },
+        "out_of_scope": {
+          "n": 3,
+          "accuracy": 0.3333333333333333
+        }
+      },
+      "conversations": {
+        "n": 4,
+        "accuracy": 1
+      },
+      "by_language": {
+        "es": {
+          "n": 36,
+          "accuracy": 0.8333333333333334
+        },
+        "en": {
+          "n": 9,
+          "accuracy": 0.8888888888888888
+        }
+      },
+      "retrieval": {
+        "n": 38,
+        "precision_at_1": 0.9210526315789473,
+        "recall_at_3": 1,
+        "recall_at_5": 1,
+        "mrr": 0.9605263157894737
+      },
+      "out_of_scope_detection": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333
+      },
+      "avg_response_ms": 0.4
+    }
+  },
+  "graph": {
+    "nodes": 142,
+    "edges": 416,
+    "node_types": {
+      "category": 6,
+      "principle": 6,
+      "concept": 38,
+      "type": 8,
+      "department": 12,
+      "document": 72
+    },
+    "relations": {
+      "pillar_of": 4,
+      "supports": 20,
+      "classified_as": 72,
+      "is_a": 72,
+      "owned_by": 72,
+      "describes": 137,
+      "related_to": 39
+    },
+    "connected_components": 1,
+    "density": 0.0416,
+    "most_connected_concepts": [
+      {
+        "id": "concept:validation",
+        "label_es": "Pruebas y validación de prototipos",
+        "degree": 12
+      },
+      {
+        "id": "concept:people-development",
+        "label_es": "Desarrollo de personas",
+        "degree": 11
+      },
+      {
+        "id": "concept:supplier-management",
+        "label_es": "Gestión de proveedores",
+        "degree": 10
+      },
+      {
+        "id": "concept:jit",
+        "label_es": "Justo a tiempo",
+        "degree": 9
+      },
+      {
+        "id": "concept:kaizen",
+        "label_es": "Kaizen (mejora continua)",
+        "degree": 9
+      },
+      {
+        "id": "concept:inspection",
+        "label_es": "Inspección de calidad",
+        "degree": 9
+      },
+      {
+        "id": "concept:standard-work",
+        "label_es": "Trabajo estandarizado",
+        "degree": 7
+      },
+      {
+        "id": "concept:inventory",
+        "label_es": "Control de inventario",
+        "degree": 7
+      }
+    ],
+    "bridge_documents": [
+      {
+        "id": "MFG-004",
+        "betweenness": 0.0564
+      },
+      {
+        "id": "RD-007",
+        "betweenness": 0.0455
+      },
+      {
+        "id": "SC-002",
+        "betweenness": 0.0448
+      },
+      {
+        "id": "MFG-005",
+        "betweenness": 0.0394
+      },
+      {
+        "id": "SAF-007",
+        "betweenness": 0.0343
+      }
+    ],
+    "phase1_reference": {
+      "node_types": 4,
+      "triples": 142
+    }
+  },
+  "usability": {
+    "generated_at": "2026-11-23T21:37:02.755Z",
+    "tool": "axe-core 4.10 (WCAG 2.1 A/AA) via Playwright/Chromium",
+    "pages_audited": 12,
+    "total_violations": 0,
+    "serious_or_critical": 0,
+    "rules_passed_avg": 23,
+    "pages_with_horizontal_scroll": [],
+    "chat_answer_ms_end_to_end": 124,
+    "details": [
+      {
+        "device": "escritorio",
+        "page": "asistente",
+        "violations": [],
+        "passes": 20,
+        "horizontalScroll": false
+      },
+      {
+        "device": "escritorio",
+        "page": "explorar",
+        "violations": [],
+        "passes": 23,
+        "horizontalScroll": false
+      },
+      {
+        "device": "escritorio",
+        "page": "clasificar",
+        "violations": [],
+        "passes": 19,
+        "horizontalScroll": false
+      },
+      {
+        "device": "escritorio",
+        "page": "grafo",
+        "violations": [],
+        "passes": 25,
+        "horizontalScroll": false
+      },
+      {
+        "device": "escritorio",
+        "page": "metricas",
+        "violations": [],
+        "passes": 25,
+        "horizontalScroll": false
+      },
+      {
+        "device": "escritorio",
+        "page": "acerca",
+        "violations": [],
+        "passes": 22,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "asistente",
+        "violations": [],
+        "passes": 21,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "explorar",
+        "violations": [],
+        "passes": 24,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "clasificar",
+        "violations": [],
+        "passes": 20,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "grafo",
+        "violations": [],
+        "passes": 26,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "metricas",
+        "violations": [],
+        "passes": 26,
+        "horizontalScroll": false
+      },
+      {
+        "device": "móvil",
+        "page": "acerca",
+        "violations": [],
+        "passes": 23,
+        "horizontalScroll": false
+      }
+    ]
+  }
+}

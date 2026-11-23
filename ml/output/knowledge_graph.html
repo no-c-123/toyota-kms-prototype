@@ -1,0 +1,452 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 820px;
+                 background-color: #FAF8F4;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 820px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:Manufacturing", "label": "Manufactura", "shape": "dot", "size": 28, "title": "Manufactura"}, {"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:Quality", "label": "Calidad", "shape": "dot", "size": 28, "title": "Calidad"}, {"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:Safety", "label": "Seguridad", "shape": "dot", "size": 28, "title": "Seguridad"}, {"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:R\u0026D", "label": "I+D", "shape": "dot", "size": 28, "title": "I+D"}, {"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:Supply Chain", "label": "Cadena de suministro", "shape": "dot", "size": 28, "title": "Cadena de suministro"}, {"color": "#3B82C4", "font": {"color": "#1C1C1C"}, "id": "cat:HR \u0026 Training", "label": "Capacitaci\u00f3n", "shape": "dot", "size": 28, "title": "Capacitaci\u00f3n"}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:tps", "label": "Sistema de Producci\u00f3n Toyota", "shape": "dot", "size": 24, "title": "Sistema de Producci\u00f3n Toyota \u2014 La forma de producir de Toyota: fabricar lo que el cliente necesita, cuando lo necesita y sin desperdicio. Sus dos pilares son el justo a tiempo y el jidoka, sobre una base de trabajo estandarizado y kaizen."}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:jit", "label": "Justo a tiempo", "shape": "dot", "size": 24, "title": "Justo a tiempo \u2014 Pilar del TPS: producir y entregar solo lo necesario, cuando se necesita y en la cantidad necesaria, con inventarios bajos."}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:jidoka", "label": "Jidoka", "shape": "dot", "size": 24, "title": "Jidoka \u2014 Pilar del TPS, tambi\u00e9n llamado automatizaci\u00f3n con toque humano: la m\u00e1quina o el operador detiene el proceso en cuanto aparece una anomal\u00eda, para que los defectos no pasen al siguiente proceso."}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:toyota-way", "label": "Toyota Way", "shape": "dot", "size": 24, "title": "Toyota Way \u2014 La filosof\u00eda de gesti\u00f3n de Toyota, basada en dos pilares: la mejora continua y el respeto por las personas."}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:kaizen", "label": "Kaizen (mejora continua)", "shape": "dot", "size": 24, "title": "Kaizen (mejora continua) \u2014 Mejora continua: todos mejoran su trabajo un poco cada d\u00eda, resolviendo los problemas desde su ra\u00edz."}, {"color": "#C8102E", "font": {"color": "#1C1C1C"}, "id": "concept:respect", "label": "Respeto por las personas", "shape": "dot", "size": 24, "title": "Respeto por las personas \u2014 Pilar del Toyota Way: desarrollar a las personas, construir confianza y trabajo en equipo, y aprovechar el conocimiento y las ideas de todos."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:andon", "label": "Andon", "shape": "dot", "size": 14, "title": "Andon \u2014 Una se\u00f1al visual y sonora, normalmente un cord\u00f3n, que el operador jala para pedir ayuda cuando hay un problema. Si no se resuelve a tiempo, la l\u00ednea se detiene."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:poka-yoke", "label": "Poka-yoke", "shape": "dot", "size": 14, "title": "Poka-yoke \u2014 Un dispositivo o m\u00e9todo a prueba de errores que hace imposible equivocarse o detecta el error al instante, para atrapar los defectos en su origen."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:kanban", "label": "Kanban", "shape": "dot", "size": 14, "title": "Kanban \u2014 Una tarjeta o se\u00f1al que autoriza producir o entregar exactamente las piezas que se consumieron, para que el material se jale seg\u00fan el consumo real."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:takt", "label": "Takt time", "shape": "dot", "size": 14, "title": "Takt time \u2014 El ritmo de producci\u00f3n que corresponde a la demanda del cliente: el tiempo disponible dividido entre las unidades requeridas."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:heijunka", "label": "Heijunka", "shape": "dot", "size": 14, "title": "Heijunka \u2014 Nivelaci\u00f3n de la producci\u00f3n: mezclar modelos y vol\u00famenes de forma pareja durante el turno para evitar picos y mantener un flujo estable."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:milk-run", "label": "Milk run", "shape": "dot", "size": 14, "title": "Milk run \u2014 Una ruta fija en la que un cami\u00f3n recoge cantidades peque\u00f1as de varios proveedores en horarios programados."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:jis", "label": "Entrega en secuencia", "shape": "dot", "size": 14, "title": "Entrega en secuencia \u2014 Las piezas llegan a la l\u00ednea en el orden exacto de los veh\u00edculos que se est\u00e1n fabricando."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:smed", "label": "SMED (cambio r\u00e1pido)", "shape": "dot", "size": 14, "title": "SMED (cambio r\u00e1pido) \u2014 Single-Minute Exchange of Die: t\u00e9cnicas para reducir el tiempo de cambio de modelo y que los lotes peque\u00f1os sean rentables."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:standard-work", "label": "Trabajo estandarizado", "shape": "dot", "size": 14, "title": "Trabajo estandarizado \u2014 La mejor forma conocida de hacer un trabajo, documentada con su secuencia, takt time e inventario est\u00e1ndar. Es la base para el kaizen."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:5s", "label": "5S", "shape": "dot", "size": 14, "title": "5S \u2014 M\u00e9todo de organizaci\u00f3n del lugar de trabajo: clasificar, ordenar, limpiar, estandarizar y disciplina."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:tpm", "label": "TPM (mantenimiento productivo total)", "shape": "dot", "size": 14, "title": "TPM (mantenimiento productivo total) \u2014 Enfoque de mantenimiento en el que los operadores hacen mantenimiento aut\u00f3nomo diario y el mantenimiento planeado evita aver\u00edas."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:muda", "label": "Muda (desperdicio)", "shape": "dot", "size": 14, "title": "Muda (desperdicio) \u2014 Cualquier actividad que agrega costo pero no valor, como esperas, exceso de inventario, sobreproducci\u00f3n o movimientos innecesarios."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:genba", "label": "Genba (ir a ver)", "shape": "dot", "size": 14, "title": "Genba (ir a ver) \u2014 El lugar real donde ocurre el trabajo. Los l\u00edderes de Toyota van al genba para ver los problemas con sus propios ojos."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:root-cause", "label": "An\u00e1lisis de causa ra\u00edz (5 porqu\u00e9s)", "shape": "dot", "size": 14, "title": "An\u00e1lisis de causa ra\u00edz (5 porqu\u00e9s) \u2014 Preguntar por qu\u00e9 varias veces, normalmente cinco, hasta encontrar la causa real de un problema y aplicar una contramedida."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:pdca", "label": "PDCA", "shape": "dot", "size": 14, "title": "PDCA \u2014 Planear, Hacer, Verificar, Actuar: el ciclo de mejora para probar cambios y convertirlos en el nuevo est\u00e1ndar."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:a3", "label": "Reporte A3", "shape": "dot", "size": 14, "title": "Reporte A3 \u2014 Un reporte de soluci\u00f3n de problemas en una sola hoja tama\u00f1o A3: antecedentes, situaci\u00f3n actual, causa ra\u00edz, contramedidas y seguimiento."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:quality-circle", "label": "C\u00edrculo de calidad", "shape": "dot", "size": 14, "title": "C\u00edrculo de calidad \u2014 Un equipo peque\u00f1o de trabajadores que se re\u00fane con regularidad para resolver problemas de calidad de su propia \u00e1rea."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:tacit", "label": "Conocimiento t\u00e1cito", "shape": "dot", "size": 14, "title": "Conocimiento t\u00e1cito \u2014 El saber hacer que vive en la experiencia de las personas y es dif\u00edcil de escribir. La gesti\u00f3n del conocimiento busca capturarlo y compartirlo."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:job-instruction", "label": "Instrucci\u00f3n de trabajo (JI)", "shape": "dot", "size": 14, "title": "Instrucci\u00f3n de trabajo (JI) \u2014 Una forma estructurada de ense\u00f1ar un trabajo: dividirlo en pasos y puntos clave, demostrarlo, dejar que el aprendiz practique y dar seguimiento."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:cross-training", "label": "Capacitaci\u00f3n cruzada", "shape": "dot", "size": 14, "title": "Capacitaci\u00f3n cruzada \u2014 Capacitar a las personas en varios procesos para que el equipo pueda cubrir ausencias y rotar puestos."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:loto", "label": "Bloqueo y etiquetado", "shape": "dot", "size": 14, "title": "Bloqueo y etiquetado \u2014 Procedimiento de seguridad que a\u00edsla todas las fuentes de energ\u00eda con candados y etiquetas personales antes del mantenimiento."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:ppe", "label": "Equipo de protecci\u00f3n personal", "shape": "dot", "size": 14, "title": "Equipo de protecci\u00f3n personal \u2014 Equipo como lentes de seguridad, guantes, tapones auditivos y zapatos de seguridad que protege a los trabajadores de los peligros."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:spc", "label": "Control estad\u00edstico del proceso", "shape": "dot", "size": 14, "title": "Control estad\u00edstico del proceso \u2014 Uso de gr\u00e1ficas de control e \u00edndices de capacidad como el Cpk para mantener un proceso estable y detectar problemas a tiempo."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:electrification", "label": "Trenes motrices electrificados", "shape": "dot", "size": 14, "title": "Trenes motrices electrificados \u2014 Tecnolog\u00edas h\u00edbridas, el\u00e9ctricas de bater\u00eda y de celda de combustible de hidr\u00f3geno que Toyota desarrolla para reducir emisiones."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:inspection", "label": "Inspecci\u00f3n de calidad", "shape": "dot", "size": 14, "title": "Inspecci\u00f3n de calidad \u2014 Revisar los productos contra el est\u00e1ndar en puntos definidos (recibo, proceso y final) para detener y corregir las piezas no conformes."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:customer-voice", "label": "Voz del cliente", "shape": "dot", "size": 14, "title": "Voz del cliente \u2014 Informaci\u00f3n que viene de los clientes, como reclamos de garant\u00eda, quejas y llamados a revisi\u00f3n, que se usa para encontrar y corregir problemas."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:risk-assessment", "label": "Evaluaci\u00f3n de riesgos", "shape": "dot", "size": 14, "title": "Evaluaci\u00f3n de riesgos \u2014 Identificar peligros, estimar qu\u00e9 tan probable y grave podr\u00eda ser una lesi\u00f3n y poner controles antes de que alguien se lastime."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:emergency", "label": "Preparaci\u00f3n ante emergencias", "shape": "dot", "size": 14, "title": "Preparaci\u00f3n ante emergencias \u2014 Planes, simulacros y recursos para responder a incendios, derrames, sismos o rescates."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:machine-guarding", "label": "Protecci\u00f3n de m\u00e1quinas", "shape": "dot", "size": 14, "title": "Protecci\u00f3n de m\u00e1quinas \u2014 Barreras f\u00edsicas y electr\u00f3nicas (cercas, cortinas de luz, interruptores, paros de emergencia) que mantienen a las personas lejos de la maquinaria en movimiento."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:validation", "label": "Pruebas y validaci\u00f3n de prototipos", "shape": "dot", "size": 14, "title": "Pruebas y validaci\u00f3n de prototipos \u2014 Probar los dise\u00f1os en prototipos, bancos de prueba, simulaciones y pistas antes de que lleguen a producci\u00f3n."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:vehicle-safety", "label": "Seguridad del veh\u00edculo", "shape": "dot", "size": 14, "title": "Seguridad del veh\u00edculo \u2014 Sistemas de frenado, estructura contra choques y asistencia al conductor que protegen a las personas dentro y alrededor del veh\u00edculo."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:supplier-management", "label": "Gesti\u00f3n de proveedores", "shape": "dot", "size": 14, "title": "Gesti\u00f3n de proveedores \u2014 Seleccionar, evaluar y desarrollar proveedores en calidad, costo, entrega y capacidad."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:inventory", "label": "Control de inventario", "shape": "dot", "size": 14, "title": "Control de inventario \u2014 Mantener la cantidad correcta de material en el lugar correcto y asegurar que el sistema coincide con lo que hay f\u00edsicamente."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:transport", "label": "Transporte y aduanas", "shape": "dot", "size": 14, "title": "Transporte y aduanas \u2014 Mover las piezas de los proveedores a la planta: camiones, rutas, costo de flete y tr\u00e1mites de importaci\u00f3n."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:people-development", "label": "Desarrollo de personas", "shape": "dot", "size": 14, "title": "Desarrollo de personas \u2014 Evaluar, guiar, reconocer y hacer crecer a los empleados con retroalimentaci\u00f3n, mentor\u00eda y planes de carrera."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:software", "label": "Software del veh\u00edculo", "shape": "dot", "size": 14, "title": "Software del veh\u00edculo \u2014 Software que corre en el veh\u00edculo, desde el infoentretenimiento hasta la asistencia al conductor, incluyendo actualizaciones por aire y ciberseguridad."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:materials", "label": "Materiales y corrosi\u00f3n", "shape": "dot", "size": 14, "title": "Materiales y corrosi\u00f3n \u2014 Elegir acero, aluminio, compuestos y recubrimientos por resistencia, peso, costo y protecci\u00f3n contra el \u00f3xido."}, {"color": "#9AA0A6", "font": {"color": "#1C1C1C"}, "id": "concept:nvh", "label": "Ruido, vibraci\u00f3n y aspereza", "shape": "dot", "size": 14, "title": "Ruido, vibraci\u00f3n y aspereza \u2014 Trabajo de ingenier\u00eda para reducir el ruido y la vibraci\u00f3n no deseados que los clientes escuchan o sienten en el veh\u00edculo."}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Standardized work", "label": "Trabajo estandarizado", "shape": "dot", "size": 12, "title": "Trabajo estandarizado"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Procedure", "label": "Procedimiento", "shape": "dot", "size": 12, "title": "Procedimiento"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Report", "label": "Reporte", "shape": "dot", "size": 12, "title": "Reporte"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Plan", "label": "Plan", "shape": "dot", "size": 12, "title": "Plan"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Policy", "label": "Pol\u00edtica", "shape": "dot", "size": 12, "title": "Pol\u00edtica"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Training", "label": "Capacitaci\u00f3n", "shape": "dot", "size": 12, "title": "Capacitaci\u00f3n"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Specification", "label": "Especificaci\u00f3n", "shape": "dot", "size": 12, "title": "Especificaci\u00f3n"}, {"color": "#7FB77E", "font": {"color": "#1C1C1C"}, "id": "type:Analysis", "label": "An\u00e1lisis", "shape": "dot", "size": 12, "title": "An\u00e1lisis"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Assembly", "label": "Ensamble", "shape": "dot", "size": 12, "title": "Ensamble"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-001", "label": "MFG-001", "shape": "dot", "size": 10, "title": "Hoja de trabajo estandarizado - estaci\u00f3n de ensamble de puerta delantera"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-002", "label": "MFG-002", "shape": "dot", "size": 10, "title": "Programa de producci\u00f3n justo a tiempo para la l\u00ednea Tacoma"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Paint", "label": "Pintura", "shape": "dot", "size": 12, "title": "Pintura"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-003", "label": "MFG-003", "shape": "dot", "size": 10, "title": "Secuencia del proceso de pintura"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Body and Welding", "label": "Carrocer\u00eda y soldadura", "shape": "dot", "size": 12, "title": "Carrocer\u00eda y soldadura"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-004", "label": "MFG-004", "shape": "dot", "size": 10, "title": "Evento kaizen - cambio de modelo en la celda de soldadura"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-005", "label": "MFG-005", "shape": "dot", "size": 10, "title": "Procedimiento de respuesta al andon en la l\u00ednea de ensamble"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Stamping", "label": "Estampado", "shape": "dot", "size": 12, "title": "Estampado"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-006", "label": "MFG-006", "shape": "dot", "size": 10, "title": "Instrucciones de operaci\u00f3n de la prensa de estampado"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Maintenance", "label": "Mantenimiento", "shape": "dot", "size": 12, "title": "Mantenimiento"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-007", "label": "MFG-007", "shape": "dot", "size": 10, "title": "Plan de mantenimiento productivo total para robots"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-008", "label": "MFG-008", "shape": "dot", "size": 10, "title": "Estudio de balanceo de la l\u00ednea de ensamble final"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Engine", "label": "Motores", "shape": "dot", "size": 12, "title": "Motores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-009", "label": "MFG-009", "shape": "dot", "size": 10, "title": "Instrucci\u00f3n de trabajo de secuencia de torque en ensamble de motor"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-010", "label": "MFG-010", "shape": "dot", "size": 10, "title": "Procedimiento de auditor\u00eda 5S en el \u00e1rea de estampado"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-011", "label": "MFG-011", "shape": "dot", "size": 10, "title": "Mapa de flujo de valor de la l\u00ednea de instalaci\u00f3n de asientos"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "MFG-012", "label": "MFG-012", "shape": "dot", "size": 10, "title": "Gu\u00eda de recorrido genba para supervisores de producci\u00f3n"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Quality Engineering", "label": "Ingenier\u00eda de calidad", "shape": "dot", "size": 12, "title": "Ingenier\u00eda de calidad"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-001", "label": "QA-001", "shape": "dot", "size": 10, "title": "An\u00e1lisis de causa ra\u00edz de defectos de pintura"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-002", "label": "QA-002", "shape": "dot", "size": 10, "title": "Lista de verificaci\u00f3n de inspecci\u00f3n final del veh\u00edculo"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-003", "label": "QA-003", "shape": "dot", "size": 10, "title": "An\u00e1lisis de reclamos de garant\u00eda de clientes del tercer trimestre"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-004", "label": "QA-004", "shape": "dot", "size": 10, "title": "Reporte de no conformidad de pieza de proveedor"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-005", "label": "QA-005", "shape": "dot", "size": 10, "title": "Control estad\u00edstico del proceso de torque"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-006", "label": "QA-006", "shape": "dot", "size": 10, "title": "Investigaci\u00f3n de llamado a revisi\u00f3n - bomba de gasolina"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-007", "label": "QA-007", "shape": "dot", "size": 10, "title": "Auditor\u00eda de calidad del taller de carrocer\u00eda"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-008", "label": "QA-008", "shape": "dot", "size": 10, "title": "Revisi\u00f3n de dispositivos poka-yoke a prueba de errores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-009", "label": "QA-009", "shape": "dot", "size": 10, "title": "Procedimiento de prueba de fugas de agua"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-010", "label": "QA-010", "shape": "dot", "size": 10, "title": "Puerta de calidad al final del taller de pintura"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-011", "label": "QA-011", "shape": "dot", "size": 10, "title": "Estudio R\u0026R de llaves de torque"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "QA-012", "label": "QA-012", "shape": "dot", "size": 10, "title": "Minuta del c\u00edrculo de calidad - queja por ruido en puerta"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Safety", "label": "Seguridad industrial", "shape": "dot", "size": 12, "title": "Seguridad industrial"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-001", "label": "SAF-001", "shape": "dot", "size": 10, "title": "Pol\u00edtica de seguridad ocupacional"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-002", "label": "SAF-002", "shape": "dot", "size": 10, "title": "Procedimiento de bloqueo y etiquetado"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Logistics", "label": "Log\u00edstica", "shape": "dot", "size": 12, "title": "Log\u00edstica"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-003", "label": "SAF-003", "shape": "dot", "size": 10, "title": "Reporte de casi accidente - montacargas"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-004", "label": "SAF-004", "shape": "dot", "size": 10, "title": "Evaluaci\u00f3n de riesgos ergon\u00f3micos"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-005", "label": "SAF-005", "shape": "dot", "size": 10, "title": "Manejo de qu\u00edmicos y respuesta a derrames"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-006", "label": "SAF-006", "shape": "dot", "size": 10, "title": "Plan de evacuaci\u00f3n de emergencia"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-007", "label": "SAF-007", "shape": "dot", "size": 10, "title": "Reporte mensual de desempe\u00f1o en seguridad"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-008", "label": "SAF-008", "shape": "dot", "size": 10, "title": "Identificaci\u00f3n de peligros en el manejo de bater\u00edas"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-009", "label": "SAF-009", "shape": "dot", "size": 10, "title": "Permiso de entrada a espacios confinados"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-010", "label": "SAF-010", "shape": "dot", "size": 10, "title": "Programa de conservaci\u00f3n auditiva en el \u00e1rea de estampado"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-011", "label": "SAF-011", "shape": "dot", "size": 10, "title": "Inspecci\u00f3n de cercas y cortinas de luz en celdas de robots"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SAF-012", "label": "SAF-012", "shape": "dot", "size": 10, "title": "Prevenci\u00f3n de estr\u00e9s por calor en verano"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:R\u0026D", "label": "I+D", "shape": "dot", "size": 12, "title": "I+D"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-001", "label": "RD-001", "shape": "dot", "size": 10, "title": "Prueba de eficiencia del tren motriz h\u00edbrido"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-002", "label": "RD-002", "shape": "dot", "size": 10, "title": "Especificaci\u00f3n de pruebas del sistema de frenos"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-003", "label": "RD-003", "shape": "dot", "size": 10, "title": "Evaluaci\u00f3n de prototipos de bater\u00eda de estado s\u00f3lido"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-004", "label": "RD-004", "shape": "dot", "size": 10, "title": "Simulaci\u00f3n de choque del nuevo chasis"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-005", "label": "RD-005", "shape": "dot", "size": 10, "title": "Durabilidad de la pila de celdas de hidr\u00f3geno"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-006", "label": "RD-006", "shape": "dot", "size": 10, "title": "Reporte de t\u00fanel de viento aerodin\u00e1mico"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-007", "label": "RD-007", "shape": "dot", "size": 10, "title": "Dise\u00f1o de fusi\u00f3n de sensores para asistencia al conductor"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-008", "label": "RD-008", "shape": "dot", "size": 10, "title": "Investigaci\u00f3n de materiales ligeros"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-009", "label": "RD-009", "shape": "dot", "size": 10, "title": "Reporte de pruebas de ruido, vibraci\u00f3n y aspereza"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-010", "label": "RD-010", "shape": "dot", "size": 10, "title": "Plan de validaci\u00f3n de actualizaciones de software inal\u00e1mbricas"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-011", "label": "RD-011", "shape": "dot", "size": 10, "title": "Prueba de durabilidad contra corrosi\u00f3n de recubrimientos inferiores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "RD-012", "label": "RD-012", "shape": "dot", "size": 10, "title": "Simulaci\u00f3n de gesti\u00f3n t\u00e9rmica de la bater\u00eda"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-001", "label": "SC-001", "shape": "dot", "size": 10, "title": "Procedimiento de reabastecimiento con kanban"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Purchasing", "label": "Compras", "shape": "dot", "size": 12, "title": "Compras"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-002", "label": "SC-002", "shape": "dot", "size": 10, "title": "Reporte de desempe\u00f1o de entregas de proveedores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-003", "label": "SC-003", "shape": "dot", "size": 10, "title": "Plan de rutas de recolecci\u00f3n milk run"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-004", "label": "SC-004", "shape": "dot", "size": 10, "title": "C\u00f3digo de conducta para proveedores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-005", "label": "SC-005", "shape": "dot", "size": 10, "title": "Plan de riesgo por escasez de semiconductores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-006", "label": "SC-006", "shape": "dot", "size": 10, "title": "Distribuci\u00f3n del almac\u00e9n de piezas de entrada"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-007", "label": "SC-007", "shape": "dot", "size": 10, "title": "Procedimiento aduanal de importaci\u00f3n de piezas"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-008", "label": "SC-008", "shape": "dot", "size": 10, "title": "Revisi\u00f3n de planeaci\u00f3n de capacidad con proveedores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-009", "label": "SC-009", "shape": "dot", "size": 10, "title": "Gesti\u00f3n de empaques y contenedores retornables"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-010", "label": "SC-010", "shape": "dot", "size": 10, "title": "Entrega de asientos en secuencia"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-011", "label": "SC-011", "shape": "dot", "size": 10, "title": "Procedimiento de conteo c\u00edclico de inventario"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "SC-012", "label": "SC-012", "shape": "dot", "size": 10, "title": "Selecci\u00f3n de transportistas y revisi\u00f3n de costos de flete"}, {"color": "#B48EAD", "font": {"color": "#1C1C1C"}, "id": "dept:Human Resources", "label": "Recursos humanos", "shape": "dot", "size": 12, "title": "Recursos humanos"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-001", "label": "HR-001", "shape": "dot", "size": 10, "title": "Programa de inducci\u00f3n para operadores nuevos"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-002", "label": "HR-002", "shape": "dot", "size": 10, "title": "M\u00f3dulo de capacitaci\u00f3n del cord\u00f3n andon"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-003", "label": "HR-003", "shape": "dot", "size": 10, "title": "Plan de formaci\u00f3n para l\u00edderes de equipo"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-004", "label": "HR-004", "shape": "dot", "size": 10, "title": "Matriz de habilidades del grupo de ensamble"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-005", "label": "HR-005", "shape": "dot", "size": 10, "title": "Pol\u00edtica de evaluaci\u00f3n de desempe\u00f1o y carrera"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-006", "label": "HR-006", "shape": "dot", "size": 10, "title": "M\u00e9todo de instrucci\u00f3n de trabajo para capacitadores"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-007", "label": "HR-007", "shape": "dot", "size": 10, "title": "Transferencia de conocimiento de expertos que se jubilan"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-008", "label": "HR-008", "shape": "dot", "size": 10, "title": "Lineamientos del sistema de sugerencias de empleados"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-009", "label": "HR-009", "shape": "dot", "size": 10, "title": "Plan de desarrollo multihabilidad para t\u00e9cnicos de mantenimiento"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-010", "label": "HR-010", "shape": "dot", "size": 10, "title": "Programa de mentor\u00eda para ingenieros de nuevo ingreso"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-011", "label": "HR-011", "shape": "dot", "size": 10, "title": "Evaluaci\u00f3n de la efectividad de la capacitaci\u00f3n"}, {"color": "#F2C14E", "font": {"color": "#1C1C1C"}, "id": "HR-012", "label": "HR-012", "shape": "dot", "size": 10, "title": "Pol\u00edtica de asistencia y ausentismo"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#C9C4BB", "from": "concept:jit", "title": "pillar_of", "to": "concept:tps"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:jidoka", "title": "pillar_of", "to": "concept:tps"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:kaizen", "title": "pillar_of", "to": "concept:toyota-way"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:respect", "title": "pillar_of", "to": "concept:toyota-way"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:andon", "title": "supports", "to": "concept:jidoka"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:poka-yoke", "title": "supports", "to": "concept:jidoka"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:kanban", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:takt", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:heijunka", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:milk-run", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:jis", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:smed", "title": "supports", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:standard-work", "title": "supports", "to": "concept:tps"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:5s", "title": "supports", "to": "concept:tps"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:tpm", "title": "supports", "to": "concept:tps"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:muda", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:genba", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:root-cause", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:pdca", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:a3", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:quality-circle", "title": "supports", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:tacit", "title": "supports", "to": "concept:respect"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:job-instruction", "title": "supports", "to": "concept:respect"}, {"arrows": "to", "color": "#C9C4BB", "from": "concept:cross-training", "title": "supports", "to": "concept:respect"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "is_a", "to": "type:Standardized work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "describes", "to": "concept:takt"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "related_to", "to": "MFG-008"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-001", "title": "related_to", "to": "MFG-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-002", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-002", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-002", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-002", "title": "describes", "to": "concept:heijunka"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-002", "title": "describes", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-003", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-003", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-003", "title": "owned_by", "to": "dept:Paint"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-003", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-004", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-004", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-004", "title": "owned_by", "to": "dept:Body and Welding"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-004", "title": "describes", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-004", "title": "describes", "to": "concept:smed"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "describes", "to": "concept:andon"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "describes", "to": "concept:jidoka"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-005", "title": "related_to", "to": "HR-002"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-006", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-006", "title": "is_a", "to": "type:Standardized work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-006", "title": "owned_by", "to": "dept:Stamping"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-006", "title": "describes", "to": "concept:materials"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-006", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-007", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-007", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-007", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-007", "title": "describes", "to": "concept:tpm"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-008", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-008", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-008", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-008", "title": "describes", "to": "concept:takt"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-009", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-009", "title": "is_a", "to": "type:Standardized work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-009", "title": "owned_by", "to": "dept:Engine"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-009", "title": "describes", "to": "concept:jis"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-009", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "owned_by", "to": "dept:Stamping"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "describes", "to": "concept:5s"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-010", "title": "describes", "to": "concept:muda"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-011", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-011", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-011", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-011", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-011", "title": "describes", "to": "concept:muda"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-012", "title": "classified_as", "to": "cat:Manufacturing"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-012", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-012", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "MFG-012", "title": "describes", "to": "concept:genba"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "describes", "to": "concept:root-cause"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "related_to", "to": "QA-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-001", "title": "related_to", "to": "QA-004"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "related_to", "to": "QA-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "related_to", "to": "QA-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-002", "title": "related_to", "to": "QA-007"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "describes", "to": "concept:customer-voice"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "describes", "to": "concept:nvh"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-003", "title": "describes", "to": "concept:software"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "describes", "to": "concept:root-cause"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-004", "title": "related_to", "to": "SC-002"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-005", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-005", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-005", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-005", "title": "describes", "to": "concept:spc"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-005", "title": "related_to", "to": "QA-011"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-006", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-006", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-006", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-006", "title": "describes", "to": "concept:customer-voice"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-006", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "related_to", "to": "QA-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-007", "title": "related_to", "to": "QA-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-008", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-008", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-008", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-008", "title": "describes", "to": "concept:poka-yoke"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-008", "title": "describes", "to": "concept:quality-circle"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-009", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-009", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-009", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-009", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-009", "title": "related_to", "to": "QA-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-010", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-010", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-010", "title": "owned_by", "to": "dept:Paint"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-010", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-011", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-011", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-011", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-011", "title": "describes", "to": "concept:spc"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "classified_as", "to": "cat:Quality"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "owned_by", "to": "dept:Quality Engineering"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "describes", "to": "concept:customer-voice"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "describes", "to": "concept:nvh"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "describes", "to": "concept:quality-circle"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "QA-012", "title": "related_to", "to": "RD-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-001", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-001", "title": "is_a", "to": "type:Policy"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-001", "title": "owned_by", "to": "dept:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-001", "title": "describes", "to": "concept:ppe"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-001", "title": "related_to", "to": "SAF-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-002", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-002", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-002", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-002", "title": "describes", "to": "concept:loto"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-002", "title": "describes", "to": "concept:machine-guarding"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-003", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-003", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-003", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-003", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-003", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-004", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-004", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-004", "title": "owned_by", "to": "dept:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-004", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-004", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-005", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-005", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-005", "title": "owned_by", "to": "dept:Paint"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-005", "title": "describes", "to": "concept:emergency"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-005", "title": "describes", "to": "concept:ppe"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-006", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-006", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-006", "title": "owned_by", "to": "dept:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-006", "title": "describes", "to": "concept:emergency"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-006", "title": "related_to", "to": "SAF-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "owned_by", "to": "dept:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "describes", "to": "concept:5s"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "describes", "to": "concept:machine-guarding"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-007", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "describes", "to": "concept:electrification"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "describes", "to": "concept:ppe"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-008", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-009", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-009", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-009", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-009", "title": "describes", "to": "concept:emergency"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-010", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-010", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-010", "title": "owned_by", "to": "dept:Stamping"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-010", "title": "describes", "to": "concept:ppe"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "describes", "to": "concept:emergency"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "describes", "to": "concept:inspection"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "describes", "to": "concept:machine-guarding"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-011", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-012", "title": "classified_as", "to": "cat:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-012", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-012", "title": "owned_by", "to": "dept:Safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "SAF-012", "title": "describes", "to": "concept:risk-assessment"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "describes", "to": "concept:electrification"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "related_to", "to": "RD-005"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-001", "title": "related_to", "to": "RD-003"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "is_a", "to": "type:Specification"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "describes", "to": "concept:vehicle-safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "related_to", "to": "RD-004"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-002", "title": "related_to", "to": "RD-007"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "describes", "to": "concept:electrification"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "related_to", "to": "RD-005"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-003", "title": "related_to", "to": "RD-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-004", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-004", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-004", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-004", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-004", "title": "describes", "to": "concept:vehicle-safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-005", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-005", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-005", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-005", "title": "describes", "to": "concept:electrification"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-005", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "related_to", "to": "RD-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-006", "title": "related_to", "to": "RD-009"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "is_a", "to": "type:Specification"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "describes", "to": "concept:software"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-007", "title": "describes", "to": "concept:vehicle-safety"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-008", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-008", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-008", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-008", "title": "describes", "to": "concept:materials"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-009", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-009", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-009", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-009", "title": "describes", "to": "concept:nvh"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-009", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-010", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-010", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-010", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-010", "title": "describes", "to": "concept:software"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-010", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-011", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-011", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-011", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-011", "title": "describes", "to": "concept:materials"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-011", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-012", "title": "classified_as", "to": "cat:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-012", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-012", "title": "owned_by", "to": "dept:R\u0026D"}, {"arrows": "to", "color": "#C9C4BB", "from": "RD-012", "title": "describes", "to": "concept:validation"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "describes", "to": "concept:jit"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "describes", "to": "concept:kanban"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-001", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "owned_by", "to": "dept:Purchasing"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "related_to", "to": "SC-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "related_to", "to": "SC-010"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-002", "title": "related_to", "to": "SC-004"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "describes", "to": "concept:milk-run"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "related_to", "to": "SC-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-003", "title": "related_to", "to": "SC-002"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-004", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-004", "title": "is_a", "to": "type:Policy"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-004", "title": "owned_by", "to": "dept:Purchasing"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-004", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-004", "title": "related_to", "to": "SC-008"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-005", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-005", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-005", "title": "owned_by", "to": "dept:Purchasing"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-005", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-005", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "describes", "to": "concept:jis"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-006", "title": "related_to", "to": "SC-011"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-007", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-007", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-007", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-007", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-008", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-008", "title": "is_a", "to": "type:Report"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-008", "title": "owned_by", "to": "dept:Purchasing"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-008", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-008", "title": "related_to", "to": "SC-002"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "describes", "to": "concept:muda"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-009", "title": "related_to", "to": "SC-002"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "describes", "to": "concept:jis"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-010", "title": "related_to", "to": "SC-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-011", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-011", "title": "is_a", "to": "type:Procedure"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-011", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-011", "title": "describes", "to": "concept:inventory"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-012", "title": "classified_as", "to": "cat:Supply Chain"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-012", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-012", "title": "owned_by", "to": "dept:Logistics"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-012", "title": "describes", "to": "concept:supplier-management"}, {"arrows": "to", "color": "#C9C4BB", "from": "SC-012", "title": "describes", "to": "concept:transport"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-001", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-001", "title": "is_a", "to": "type:Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-001", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-001", "title": "describes", "to": "concept:respect"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-001", "title": "describes", "to": "concept:toyota-way"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "is_a", "to": "type:Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "describes", "to": "concept:andon"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-002", "title": "related_to", "to": "HR-011"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "is_a", "to": "type:Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "describes", "to": "concept:a3"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "describes", "to": "concept:job-instruction"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-003", "title": "related_to", "to": "HR-006"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-004", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-004", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-004", "title": "owned_by", "to": "dept:Assembly"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-004", "title": "describes", "to": "concept:cross-training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "is_a", "to": "type:Policy"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "related_to", "to": "HR-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-005", "title": "related_to", "to": "HR-011"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-006", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-006", "title": "is_a", "to": "type:Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-006", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-006", "title": "describes", "to": "concept:job-instruction"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-006", "title": "describes", "to": "concept:standard-work"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-007", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-007", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-007", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-007", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-007", "title": "describes", "to": "concept:tacit"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-008", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-008", "title": "is_a", "to": "type:Policy"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-008", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-008", "title": "describes", "to": "concept:kaizen"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-008", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-009", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-009", "title": "is_a", "to": "type:Plan"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-009", "title": "owned_by", "to": "dept:Maintenance"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-009", "title": "describes", "to": "concept:cross-training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-009", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-010", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-010", "title": "is_a", "to": "type:Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-010", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-010", "title": "describes", "to": "concept:genba"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-010", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-011", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-011", "title": "is_a", "to": "type:Analysis"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-011", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-011", "title": "describes", "to": "concept:people-development"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-011", "title": "related_to", "to": "HR-012"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-012", "title": "classified_as", "to": "cat:HR \u0026 Training"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-012", "title": "is_a", "to": "type:Policy"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-012", "title": "owned_by", "to": "dept:Human Resources"}, {"arrows": "to", "color": "#C9C4BB", "from": "HR-012", "title": "describes", "to": "concept:people-development"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -6000,
+            "springConstant": 0.001,
+            "springLength": 120
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

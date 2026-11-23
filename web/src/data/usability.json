@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-11-23T21:37:02.755Z",
+  "tool": "axe-core 4.10 (WCAG 2.1 A/AA) via Playwright/Chromium",
+  "pages_audited": 12,
+  "total_violations": 0,
+  "serious_or_critical": 0,
+  "rules_passed_avg": 23,
+  "pages_with_horizontal_scroll": [],
+  "chat_answer_ms_end_to_end": 124,
+  "details": [
+    {
+      "device": "escritorio",
+      "page": "asistente",
+      "violations": [],
+      "passes": 20,
+      "horizontalScroll": false
+    },
+    {
+      "device": "escritorio",
+      "page": "explorar",
+      "violations": [],
+      "passes": 23,
+      "horizontalScroll": false
+    },
+    {
+      "device": "escritorio",
+      "page": "clasificar",
+      "violations": [],
+      "passes": 19,
+      "horizontalScroll": false
+    },
+    {
+      "device": "escritorio",
+      "page": "grafo",
+      "violations": [],
+      "passes": 25,
+      "horizontalScroll": false
+    },
+    {
+      "device": "escritorio",
+      "page": "metricas",
+      "violations": [],
+      "passes": 25,
+      "horizontalScroll": false
+    },
+    {
+      "device": "escritorio",
+      "page": "acerca",
+      "violations": [],
+      "passes": 22,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "asistente",
+      "violations": [],
+      "passes": 21,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "explorar",
+      "violations": [],
+      "passes": 24,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "clasificar",
+      "violations": [],
+      "passes": 20,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "grafo",
+      "violations": [],
+      "passes": 26,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "metricas",
+      "violations": [],
+      "passes": 26,
+      "horizontalScroll": false
+    },
+    {
+      "device": "móvil",
+      "page": "acerca",
+      "violations": [],
+      "passes": 23,
+      "horizontalScroll": false
+    }
+  ]
+}

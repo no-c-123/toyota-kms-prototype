@@ -1,0 +1,19 @@
+{
+  "random baseline": {
+    "precision@3": 0.194,
+    "precision@5": 0.192,
+    "precision@5_same_category": 0.147
+  },
+  "cosine only": {
+    "precision@3": 0.704,
+    "precision@5": 0.656,
+    "precision@5_same_category": 0.569
+  },
+  "hybrid (cosine + ontology)": {
+    "precision@3": 0.931,
+    "precision@5": 0.908,
+    "precision@5_same_category": 0.75
+  },
+  "avg_categories_in_top5": 1.81,
+  "catalog_coverage": 1.0
+}

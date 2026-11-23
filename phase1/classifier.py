@@ -4,7 +4,7 @@ Toyota Knowledge Management System - Automated Document Classifier
 Prototype for the course "Sistemas y tecnologias de administracion del conocimiento".
 
 Steps:
-  1. Load a set of sample Toyota documents (data/toyota_documents.json).
+  1. Load a set of sample Toyota documents (phase1/toyota_documents_v1.json).
   2. Vectorize the text with TF-IDF.
   3. Train two simple models: Multinomial Naive Bayes and Logistic Regression.
   4. Evaluate them and classify new, unseen documents into the predefined categories.
@@ -29,7 +29,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 
 BASE = Path(__file__).parent
-DATA_FILE = BASE / "data" / "toyota_documents.json"
+DATA_FILE = BASE / "toyota_documents_v1.json"
 OUT_DIR = BASE / "output"
 OUT_DIR.mkdir(exist_ok=True)
 
