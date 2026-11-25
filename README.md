@@ -7,7 +7,7 @@ An integrated knowledge management prototype for a Toyota plant (fictional scena
 It answers questions in Spanish or English, recommends related documents, classifies new documents and
 shows how the organization's knowledge is connected.
 
-**Live demo:** `https://<your-project>.vercel.app` (see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
+**Live demo:** https://toyota-kms-prototype.vercel.app (deployment notes in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
 
 | Component | What it does | Where |
 | --- | --- | --- |

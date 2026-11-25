@@ -36,7 +36,7 @@ export default function About() {
           <Box x={540} y={335} w={440} h={200} title="src/" lines={['Asistente (chat) · Explorar · Clasificar', 'Grafo interactivo (force-graph)', 'Métricas y cuestionario SUS', 'Historial de sesión en el navegador', '  → alimenta “Recomendado para ti”']} />
           <Arrow d="M300 105 H355" />
           <Arrow d="M660 105 H715" />
-          <Arrow d="M850 165 V250 H250 V330" label="se empaqueta con las funciones" lx="420" ly="243" />
+          <Arrow d="M850 165 V288 H250 V330" label="se empaqueta con las funciones" lx="420" ly="280" />
           <Arrow d="M540 410 H485" label="JSON" lx="494" ly="400" />
           <Arrow d="M485 470 H535" />
         </svg>
@@ -59,7 +59,7 @@ export default function About() {
             <li><b>Python:</b> scikit-learn, NumPy, NetworkX, PyVis, matplotlib.</li>
             <li><b>Servidor:</b> funciones serverless de Vercel en Node.js, sin base de datos (el conocimiento viaja con el código).</li>
             <li><b>Frontend:</b> React 18, Vite, react-force-graph.</li>
-            <li><b>Calidad:</b> pruebas de paridad Python/JavaScript, evaluación automática y auditoría Lighthouse.</li>
+            <li><b>Calidad:</b> pruebas de paridad Python/JavaScript, evaluación automática y auditoría de accesibilidad con axe-core.</li>
           </ul>
           <h3>Equipo</h3>
           <p className="small">Héctor Emiliano Leal Prieto y Héctor Kuri Aguirre · Tecmilenio · Profesor: Jonathan Alexis Puente Guerrero.</p>
